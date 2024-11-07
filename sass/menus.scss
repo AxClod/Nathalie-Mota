@@ -1,0 +1,45 @@
+//Header
+.header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__logo {
+        margin-left: 120px;
+    }
+    ul {
+        list-style: none;
+        display: flex;
+        margin-left: 955px;
+        li {
+            margin-right: 50px;
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
+    }
+}
+
+//Footer
+
+.footer {
+    height: 40px;
+    border-top: solid black 1px;
+    &__menu {
+        display: flex;
+        justify-content: center;
+        ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+        li {
+            margin-right: 100px;
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
+    }
+}
