@@ -5,22 +5,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php wp_head(); ?>
     </head>
+
 <body <?php body_class(); ?> >
 <?php wp_body_open(); ?> 
-<header class="header">
-    <div class="header__logo">
-        <img src="<?php echo get_theme_file_uri(); ?>/assets/Logo.png" alt="Logo du site Nathalie Mota">
+
+<header class="navheader">
+    <div class="nav-menu">
+            <div class="navheader__logo">
+                <a href="<?php echo home_url(); ?>">
+                    <img src="<?php echo get_theme_file_uri(); ?>/assets/Logo.png" alt="Logo du site">
+                </a>
+            </div>
+            <div class="burgerBouton">
+                <span></span>
+            </div>
     </div>
-    <nav class="navigation">
-        <?php
-            wp_nav_menu(array(
-                'theme_location' => 'header', 
-                'container' => false, 
-                'menu_class' => 'menu-principal',
-            ));
-        ?>
-    </nav>
-    <div class="burgerBtn">
-        <span></span>
+    <div>
+        <nav class="nav-burger">
+            <?php
+                wp_nav_menu(array(
+                    'theme_location' => 'header', 
+                    'container' => false, 
+                    'menu_class' => 'menu-principal',
+                ));
+            ?>
+        </nav>
     </div>
+
 </header>
