@@ -14,16 +14,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Sélectionne la modale et les boutons de contact
     const modal = document.getElementById('modale-contact');
     const btns = document.getElementsByClassName('bouton-contact');
-
     // Ajoute un écouteur de clic à chaque bouton 'bouton-contact'
-    for (let i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function(event) {
+    btns[0].addEventListener("click", function(event) {
             // Empêche le comportement par défaut du lien
-            event.preventDefault();
+//            event.preventDefault();
             // Affiche la modale
+//console.log(modal)
             modal.style.display = "block";
         });
-    }
+    
 
     // Ajoute un écouteur pour fermer la modale en cliquant en dehors de son contenu
     window.addEventListener("click", function(event) {

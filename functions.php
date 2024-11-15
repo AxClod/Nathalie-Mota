@@ -21,7 +21,8 @@ function theme_script() {
 
 
 function ajouter_classe_bouton_contact($classes, $item, $args) {
-    if ($item->ID == 14) { 
+    
+    if ($item->ID == 22) { 
         $classes[] = 'bouton-contact';
     }
     return $classes;

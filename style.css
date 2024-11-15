@@ -78,14 +78,14 @@ Text Domain: nathaliemota
   nav.active {
     display: block;
   }
-  .burgerBtn {
+  .burgerBouton {
     width: 35px;
     height: 20px;
     cursor: pointer;
     position: relative;
     right: 30px;
   }
-  .burgerBtn span {
+  .burgerBouton span {
     width: 100%;
     height: 2px;
     background-color: #000;
@@ -95,7 +95,7 @@ Text Domain: nathaliemota
     transform: translateY(-50%);
     transition: background-color 0.5s ease-in-out;
   }
-  .burgerBtn span::before, .burgerBtn span::after {
+  .burgerBouton span::before, .burgerBouton span::after {
     content: "";
     position: absolute;
     width: 100%;
@@ -103,19 +103,19 @@ Text Domain: nathaliemota
     background-color: #000;
     transition: transform 0.5s ease-in-out;
   }
-  .burgerBtn span::before {
+  .burgerBouton span::before {
     transform: translateY(-10px);
   }
-  .burgerBtn span::after {
+  .burgerBouton span::after {
     transform: translateY(10px);
   }
-  .burgerBtn.open span {
+  .burgerBouton.open span {
     background-color: transparent !important;
   }
-  .burgerBtn.open span::before {
+  .burgerBouton.open span::before {
     transform: translateY(0px) rotateZ(45deg);
   }
-  .burgerBtn.open span::after {
+  .burgerBouton.open span::after {
     transform: translateY(0px) rotateZ(-45deg);
   }
   .nav-burger {
@@ -197,7 +197,7 @@ Text Domain: nathaliemota
   margin-top: 10px;
 }
 
-.formulaireContact {
+.formulaire-contact {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -205,22 +205,22 @@ Text Domain: nathaliemota
   width: 100%;
   margin-top: 20px;
 }
-.formulaireContact label {
+.formulaire-contact label {
   font-family: "poppins", sans-serif;
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 5px;
 }
-.formulaireContact input {
+.formulaire-contact input {
   height: 40px;
   width: 263px;
   border-radius: 8px;
   border: solid #B8BBC2 1px;
   margin-top: 0px;
 }
-.formulaireContact input[type=submit] {
+.formulaire-contact input[type=submit] {
   height: 50px;
-  width: 270px;
+  width: 263px;
   border-radius: 2px;
   background-color: #D8D8D8;
   border: solid #D8D8D8 2px;
@@ -231,10 +231,10 @@ Text Domain: nathaliemota
   margin-bottom: 0px;
   font-size: 14px;
 }
-.formulaireContact input[type=submit]:hover {
+.formulaire-contact input[type=submit]:hover {
   background-color: #cacaca;
 }
-.formulaireContact textarea {
+.formulaire-contact textarea {
   height: 142px;
   width: 263px;
   border-radius: 8px;
