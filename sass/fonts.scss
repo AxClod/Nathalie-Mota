@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'SpaceMono-BoldItalic';
+    src: url('assets/fonts/SpaceMono-BoldItalic.ttf') format('truetype'),
+    font-style: italic;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'SpaceMono-RegularItalic';
+    src: url('assets/fonts/SpaceMono-RegularItalic.ttf') format('truetype'),
+    font-style: italic;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'SpaceMono-Regular';
+    src: url('assets/fonts/SpaceMono-Regular.ttf') format('truetype'),
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Poppins-Light';
+    src: url('assets/fonts/Poppins-Light.ttf') format('truetype'),
+    font-style: normal;
+    font-weight: 300;
+}
