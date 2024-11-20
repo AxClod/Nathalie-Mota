@@ -13,7 +13,7 @@
     <div class="nav-menu">
             <div class="navheader__logo">
                 <a href="<?php echo home_url(); ?>">
-                    <img src="<?php echo get_theme_file_uri(); ?>/assets/Logo.png" alt="Logo du site">
+                    <img src="<?php echo get_theme_file_uri(); ?>/assets/images/Logo.png" alt="Logo du site">
                 </a>
             </div>
             <div class="burgerBouton">

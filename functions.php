@@ -7,9 +7,14 @@ function theme_script() {
         wp_enqueue_script('jquery');
         // Charger le fichier script.js
         wp_enqueue_script('script-personnalise', get_template_directory_uri() . '/js/script.js', array('jquery'), null, true);
+        // Active la prise en charge des images à la une pour les articles
     }
     add_action('wp_enqueue_scripts', 'theme_script');
     
+// Ajouter la prise en charge des images mises en avant
+add_theme_support( 'post-thumbnails' );
+add_theme_support( "title-tag" );
+
     
     function register_my_menus() {
         register_nav_menus( array(
