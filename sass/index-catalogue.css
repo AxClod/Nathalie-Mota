@@ -22,14 +22,14 @@
   background-color: #c9c9c9;
 }
 
-.container-photo-apparente {
+.catalogue-container {
   display: flex;
   align-items: center;
   text-transform: uppercase;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.container-photo-apparente .catalogue-image {
+.catalogue-container .catalogue-image {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,7 +42,7 @@
      object-fit: cover;
   position: relative;
 }
-.container-photo-apparente .catalogue-image .catalogue-image_overlay {
+.catalogue-container .catalogue-image .catalogue-image_overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -51,42 +51,42 @@
   display: none; /* Cachée par défaut */
   background: rgba(0, 0, 0, 0.6);
 }
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .eye-icon,
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .fullscreen-icon,
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_title,
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_category {
+.catalogue-container .catalogue-image .catalogue-image_overlay .eye-icon,
+.catalogue-container .catalogue-image .catalogue-image_overlay .fullscreen-icon,
+.catalogue-container .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_title,
+.catalogue-container .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_category {
   position: absolute;
   color: #FFFFFF;
 }
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .eye-icon {
+.catalogue-container .catalogue-image .catalogue-image_overlay .eye-icon {
   left: 50%;
   top: 50%;
   width: 50px;
   height: 35px;
   transform: translate(-50%, -50%);
 }
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .fullscreen-icon {
+.catalogue-container .catalogue-image .catalogue-image_overlay .fullscreen-icon {
   top: 10px;
   right: 10px;
   width: 35px;
   height: 35px;
   cursor: pointer;
 }
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_title,
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_category {
+.catalogue-container .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_title,
+.catalogue-container .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_category {
   bottom: 10px;
 }
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_title {
+.catalogue-container .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_title {
   left: 10px;
   font-family: "poppins", sans-serif;
 }
-.container-photo-apparente .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_category {
+.catalogue-container .catalogue-image .catalogue-image_overlay .catalogue-image_overlay_category {
   right: 10px;
 }
-.container-photo-apparente .catalogue-image:hover .catalogue-image_overlay {
+.catalogue-container .catalogue-image:hover .catalogue-image_overlay {
   display: block;
 }
-.container-photo-apparente .catalogue-image > img {
+.catalogue-container .catalogue-image > img {
   -o-object-fit: cover;
      object-fit: cover;
   height: 81vh;
