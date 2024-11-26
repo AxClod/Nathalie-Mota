@@ -1,12 +1,19 @@
+@charset "UTF-8";
 .container-hero {
   width: 100%;
-  height: 962px;
+  height: 962px; /* Ajustez selon vos besoins */
   display: flex;
   justify-content: center;
   align-items: center;
-  -o-object-fit: cover;
-     object-fit: cover;
   overflow: hidden;
+  position: relative; /* Nécessaire pour que le texte absolu se centre par rapport au conteneur */
+}
+.container-hero_image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .container-hero_title {
   font-family: "SpaceMono-BoldItalic";
@@ -17,11 +24,9 @@
   position: absolute;
   color: transparent;
   z-index: 2;
-}
-.container-hero_image {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  position: relative;
+  /* Centrage absolu */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center; /* Pour centrer le texte multiligne */
 }/*# sourceMappingURL=Index-hero.css.map */

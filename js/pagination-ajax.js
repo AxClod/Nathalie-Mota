@@ -1,56 +1,49 @@
 jQuery(document).ready(function($) {
+    var pageNum = 1; // Numéro de la page actuelle
+    var isLoading = false; // Éviter les requêtes multiples
+    var noMorePhotos = false; // Vérifie s'il y a encore des données à charger
 
-    // Variable globale pour la page actuelle
-    let pageNum = 1;
+    // Fonction de chargement des photos (CPT "photos")
+    function loadMorePhotos() {
+        if (isLoading || noMorePhotos) {
+            return;
+        }
 
-    // Cette fonction retourne les valeurs actuelles des filtres.
-    function getCurrentFilters() {
-        return {
-            categorie: $('#filtre-categorie').val(), // Valeur du filtre catégorie
-            format: $('#filtre-format').val(),      // Valeur du filtre format
-            annee: $('#filtre-date').val()          // Valeur du filtre année
-        };
-    }
+        isLoading = true; // Bloque d'autres requêtes jusqu'à ce que celle-ci soit terminée
 
-    // Déclenchement de la fonction au clic du bouton "Charger plus"
-    $('#load-more-btn').click(function(e) {
-        e.preventDefault(); // Empêche le comportement par défaut du bouton
+        // Ajout d'un indicateur de chargement
+        $('.load-more').text('Chargement...');
 
-        const currentFilters = getCurrentFilters();  // Récupération des filtres actuels
-
-        // Requête AJAX pour charger plus de photos
         $.ajax({
-            url: myAjax.ajaxurl, // URL générée via wp_localize_script
+            url: myAjax.ajaxurl,
             type: 'POST',
             data: {
-                action: 'load_more_photos', // Action liée au handler PHP
-                page: pageNum,              // Numéro de la page actuelle
-                categorie: currentFilters.categorie, // Filtre catégorie
-                format: currentFilters.format,       // Filtre format
-                annee: currentFilters.annee          // Filtre année
-            },
-            beforeSend: function() {
-                // Ajouter un spinner ou désactiver le bouton pendant le chargement
-                $('#load-more-btn').text('Chargement...').prop('disabled', true);
+                action: 'load_more_photos', // Nom de l'action utilisée dans le backend
+                page: pageNum,
+                post_type: 'photos' // Indique que cela concerne le type de post personnalisé "photos"
             },
             success: function(response) {
-                if (!response || response.trim() === '') { // Vérifier si la réponse est vide
-                    // Ajouter un message pour informer qu'il n'y a plus de photos à charger
-                    $('.container-photo-apparente').append('<p class="no-more-photos">Pas de photos supplémentaires à charger.</p>');
-                    $('#load-more-btn').hide(); // Masquer le bouton
+                if (response.trim() === '') {
+                    noMorePhotos = true; // Plus de photos à charger
+                    $('.load-more').hide(); // Cache le bouton "Charger plus"
+                    $('.container-photo-apparente').append('<p>Pas de photos supplémentaires à charger.</p>');
                 } else {
                     $('.container-photo-apparente').append(response); // Ajouter les nouvelles photos
                     pageNum++; // Incrémenter le numéro de page
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('Erreur lors du chargement des photos :', error);
-                alert('Une erreur est survenue lors du chargement des photos. Veuillez réessayer.');
+            error: function() {
+                console.error('Erreur lors du chargement des photos.');
             },
             complete: function() {
-                // Réactiver le bouton et réinitialiser le texte après chargement
-                $('#load-more-btn').text('Charger plus').prop('disabled', false);
+                isLoading = false; // Requêtes à nouveau autorisées
+                $('.load-more').text('Charger plus'); // Rétablir le texte du bouton
             }
         });
+    }
+
+    // Déclenchement du chargement au clic sur le bouton
+    $('.load-more').on('click', function() {
+        loadMorePhotos(); // Charger les photos
     });
 });

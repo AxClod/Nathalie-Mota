@@ -1,4 +1,8 @@
 .page-photo {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    margin-left: 10%;
 
     &_section-bloc {
         display: flex;
@@ -17,9 +21,10 @@
             padding-right: 17em;
             padding-bottom: 2em;
             margin-right: 2em;
+            list-style: none;
 
             h1 {
-                font-family: 'SpaceMono-Regular';
+                font-family: "SpaceMono-Regular";
                 font-size: 66px;
                 color: #000;
                 font-style: italic;
@@ -29,231 +34,160 @@
                 margin-bottom: 9px;
             }
         }
-
-        .photo-container {
-            position: relative;
-            width: 50%;
-            height: 100%;
-            display: flex;
-            align-items: end;
-            margin-top: 30px;
-
-            img {
-                width: 100%;
-                max-height: 100%;
-            }
-
-            &:hover .hover-photo{
-                background: rgba(0, 0, 0, 0.60);
-                display: block;
-            }
-
-            .hover-photo{
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                display: none;
-
-                .icone-plein-ecran{
-                    position: absolute;
-                    right: 8px;
-                    top: 8px;
-
-                    cursor: pointer;
-                    width: 8%;
-                    height: auto;
-                }
-            }
-        }
-
-        img{
-            width: 100%;
-            display: flex;
-        }
     }
-}
 
-.detail-info-photo {
-    color: #000;
-    font-family: "Space Mono";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    a {
+    .detail-info-photo {
         color: #000;
-    }
-}
-
-
-// Section contact //
-
-.page-photo_contact {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid black;
-    padding-bottom: 1em;
-    height: 118px;
-    &__bouton {
-        display: flex;
-        gap: 84px;
-        p {
-            font-family: "Poppins";
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 300;
-            line-height: normal; 
-        }
-        &__btn {
-            border-radius: 2px;
-            background: #D8D8D8;
-            box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
-            display: flex;
-            width: 22em;
-            height: 3.5em;
-            padding: 8px 15px;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            border: none;
-            cursor: pointer;
-            &:hover {
-                color: #fff;
-                background-color: #000;
-            }
-        }
-    }
-    &__navigation {
-        display: flex;
-        justify-content: flex-end;
-        flex-direction: column-reverse;
-        width: 6%;
-        .div-preview {
-            position: relative;
-            height: 8em;
-            .preview {
-                img {
-                    object-fit: contain;
-                    max-height: 100px;
-                    width: 100%;
-                }
-            }
-            .previous-image, .next-image {
-                visibility: hidden;
-                position: absolute;
-            }
-        }
-        .arrows {
-            display: flex;
-            justify-content: space-between;
-        }
-    }
-}
-
-
-// Section recommandations //
-
-.page-photo_recommandations {
-    h3 {
-        color: #000;
-        font-family: 'Space Mono';
-        font-size: 18px;
+        font-family: "SpaceMono-Regular";
+        font-size: 14px;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-        letter-spacing: 1.8px;
+        letter-spacing: 1.4px;
         text-transform: uppercase;
-        margin-top: 4em;
+        a {
+            color: #000;
+        }
     }
-    &__photo {
+
+    .img-single {
+        position: relative;
         display: flex;
-        justify-content: space-between;
-        margin-top: 35px;
-        margin-bottom: 37px;
-        width: 100%;
-        height: 100%;
-        gap: 20px;
-
-        &_img {
+        justify-content: center;
+        align-items: center; /* Centrer verticalement l'image */
+    
+        &__overlay {
             position: relative;
-            flex: 1;
-            height: 495px;
-            width: 564px;
-            object-fit: contain;
+            display: flex;
+            width: 100%; /* S'adapte à tout l'espace disponible */
+            height: 100%; /* Prend la hauteur disponible */
+        }
+    
+        img {
+            width: auto; /* Respecte le ratio d'aspect */
+            max-width: 100%; /* Ne dépasse pas la largeur du conteneur */
+            height: auto; /* Respecte le ratio d'aspect */
+            max-height: 90vh; /* Ne dépasse pas la hauteur de l'écran visible */
+            object-fit: contain; /* Garde les proportions */
             display: block;
-            img {
-                height: 100%;
-                width: 100%;
-                max-height: 100%;
-                transition: all 0.5s ease-in-out;
-                display: flex;
-                object-fit: cover;
-            }
+        }
+    
+        .overlay-single {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: none;
+            z-index: 10;
+        }
+    
+        &:hover .overlay-single {
+            display: block;
+        }
+    
+        img.fullscreen-icon {
+            width: 35px;
+            height: 35px;
+        }
+    }
 
-            &:hover .hover-photo-recommandations{
-                background: rgba(0, 0, 0, 0.60);
-                display: block;
+
+    // Section contact //
+
+        // Section contact //
+
+        .page-photo_contact {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid black;
+            padding-bottom: 1em;
+            height: 118px;
+    
+            &__bouton {
+                display: flex;
+                gap: 84px;
+    
+                p {
+                    font-family: "Poppins";
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 300;
+                    line-height: normal;
+                }
+    
+                #btn-contact {
+                    border-radius: 2px;
+                    background: #D8D8D8;
+                    box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+                    display: flex;
+                    width: 22em;
+                    height: 3.5em;
+                    padding: 8px 15px;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    border: none;
+                    cursor: pointer;
+    
+                    &:hover {
+                        color: #fff;
+                        background-color: #000;
+                    }
+                }
             }
-            .hover-photo-recommandations {
-                display: none;
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                z-index: 1;
-                .icone-plein-ecran{
-                    position: absolute;
-                    right: 8px;
-                    top: 8px;
-                    cursor: pointer;
-                    width: 8%;
-                    height: auto;
+    
+            &__navigation-arrows {
+                align-items: center;
+                display: flex;
+                gap: 2em;
+                position: relative;
+                
+                .arrow-block {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    position: relative;
+            
+                    &:hover .container-miniature {
+                        display: block;
+                    }
                 }
-                .icone-details-photo {
+    
+                .container-miniature-previous {
+                    width: 81px;
+                    height: 71px;
+                    background-color: #d8d8d8;
+                    overflow: hidden;
+                    display: none;
                     position: absolute;
-                    top: 0;
-                    bottom: 0;
+                    bottom: 30px;
+                    left: 1px;
+            
+                    &__img-arrows {
+                        object-fit: cover;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            
+                .container-miniature-next {
+                    width: 80px;
+                    height: 70px;
+                    background-color: #d8d8d8;
+                    overflow: hidden;
+                    display: none;
+                    position: absolute;
+                    bottom: 30px;
                     right: 0;
-                    left: 0;
-                    margin: auto;
-                    cursor: pointer;
-                    width: 8%;
-                    height: auto;
-                }
-                .contenu-ref {
-                    font-family: "Space Mono"; 
-                    font-weight: 400; 
-                    letter-spacing: 1.4px; 
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    margin: 0.5vw 1vw;
-                    cursor: pointer;
-                    width: 8%;
-                    height: auto;
-                    color: white;
-                    text-transform: uppercase;
-                }
-                .contenu-categorie {
-                    font-family: "Space Mono";
-                    font-weight: 400; 
-                    letter-spacing: 1.4px; 
-                    position: absolute;
-                    bottom: 0;
-                    right: 3em;
-                    margin: 0.5vw 2vw;
-                    cursor: pointer;
-                    width: 8%;
-                    height: auto;
-                    text-transform: uppercase;
-                    a {
-                        color: white;
+            
+                    &__img-arrows {
+                        max-width: 100%;
+                        height: auto;
+                        object-fit: cover;
                     }
                 }
             }
         }
-    }  
-}
+    }

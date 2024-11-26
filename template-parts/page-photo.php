@@ -21,116 +21,143 @@
             </li>
         </ul>
 
-		<div class="page-photo_photo-container">
-            <div class="photo">
+        <div class="img-single">
+            <div class="img-single__overlay">
                 <?php if (has_post_thumbnail()) : ?>
                     <img data-src="<?php the_post_thumbnail_url(); ?>" src="<?php the_post_thumbnail_url('medium_large'); ?>" alt="<?php the_title_attribute(); ?>"/>
                 <?php endif; ?>
+                <div class="overlay-single">
+                    <img src="<?php echo get_theme_file_uri() .'/assets/images/Icon_fullscreen.png';?>" class="fullscreen-icon" alt="Voir en plein écran">
+                </div>
             </div>
-            <!-- Div pour le hover -->
-            <div class="hover-photo">
-                <a href="#"><img id="icone-plein-ecran" class="icone-plein-ecran" src="<?php echo get_template_directory_uri(); ?>/assets/images/Icon_fullscreen.png" alt="Icone plein écran"></a>
-            </div>
-		</div>
+        </div>
     </section>
 
 
 <!-- section précédent/suivant -->
 
 <section class="page-photo_contact">
-        <div class="page-photo_contact__bouton">
-            <p class="texte">Cette photo vous intéresse ?</p>
-            <input id="btn-contact" class="bouton-contact page-photo_contact__btn" type="button" value="Contact">
-        </div>
-        
-        <div class="page-photo_contact__navigation">
-            <?php
-                $prevPost = get_previous_post();
-                $nextPost = get_next_post();
-            ?>
+    <div class="page-photo_contact__bouton">
+        <p class="texte">Cette photo vous intéresse ?</p>
+        <input id="btn-contact" class="bouton-contact" type="button" value="Contact">
+    </div>
+    
+    <?php
+            //Flèches précédent et suivant
+            $next_post = get_next_post();
+            $previous_post = get_previous_post();
 
-            <div class="arrows">
-                <?php if (!empty($prevPost)) : 
-                        $prevThumbnail = get_the_post_thumbnail_url( $prevPost->ID );
-                        $prevLink = get_permalink($prevPost); ?>
-                        <a id="arrow-left" href="<?= $prevLink; ?>">
-                            <img class="arrow arrow-gauche" src="<?= get_template_directory_uri(); ?>/assets/images/arrow-left.png" alt="Flèche pointant vers la gauche" />
-                        </a>
-                        <?php endif;
-                        if (!empty($nextPost)) :
-                            $nextThumbnail = get_the_post_thumbnail_url( $nextPost->ID );
-                            $nextLink = get_permalink($nextPost); ?>
-                            <a href="<?= $nextLink; ?>">
-                                <img id="arrow-right" class="arrow arrow-droite" src="<?= get_template_directory_uri(); ?>/assets/images/arrow-right.png" alt="Flèche pointant vers la droite" />
-                            </a>
-                <?php endif; ?>
-            </div>
-            
-            <div class="div-preview">
-            <div class="preview">
-                <?php if (!empty($prevPost)) :
-                        $prevThumbnail = get_the_post_thumbnail_url( $prevPost->ID );
-                        $prevLink = get_permalink($prevPost); ?>
-                        <a href="<?= $prevLink; ?>">
-                        <img id="previous-image" class="previous-image" src="<?php echo $prevThumbnail; ?>" alt="Prévisualisation image précédente">
-                        </a>
-                <?php endif; ?>
-            </div>
+            // Si on est sur la dernière photo, définir $next_post comme le premier post
+            if (empty($next_post)) {
+                $args = array(
+                    'posts_per_page' => 1,
+                    'order'          => 'ASC',
+                    'post_type'      => 'photos' // 
+                );
+                $first_post = get_posts($args);
+                if (!empty($first_post)) {
+                    $next_post = $first_post[0];
+                }
+            }
 
-            <div class="preview">
-                <?php if (!empty($nextPost)) :
-                            $nextThumbnail = get_the_post_thumbnail_url( $nextPost->ID );
-                            $nextLink = get_permalink($nextPost); ?>
-                            <a href="<?= $nextLink; ?>">
-                            <img id="next-image" class="next-image" src="<?php echo $nextThumbnail; ?>" alt="Prévisualisation image suivante">
-                            </a>
-                <?php endif ?>
-            </div>
-            </div>
+            // Si on est sur la première photo, définir $previous_post comme le dernier post
+            if (empty($previous_post)) {
+                $args = array(
+                    'posts_per_page' => 1,
+                    'order'          => 'DESC',
+                    'post_type'      => 'photos' // 
+                );
+                $last_post = get_posts($args);
+                if (!empty($last_post)) {
+                    $previous_post = $last_post[0];
+                }
+            }
+        ?>
+
+        <div class="page-photo_contact__navigation-arrows">
+            <?php if (!empty($previous_post) || !empty($next_post)) { ?>
+                
+                <!-- Bloc pour la photo précédente -->
+                <div class="arrow-block">
+                    <div class="container-miniature container-miniature-previous">
+                        <?php
+                            if (!empty($previous_post)) {
+                                $thumbnail_ID_prev = get_post_thumbnail_id($previous_post->ID);
+                                if ($thumbnail_ID_prev) {
+                                    echo wp_get_attachment_image($thumbnail_ID_prev, 'thumbnail', false, ['class' => 'container-miniature-previous__img-arrows']);
+                                }
+                            }
+                        ?>
+                    </div>
+                    <?php if (!empty($previous_post)) { ?>
+                        <a href="<?php echo get_permalink($previous_post->ID) ?>"><img class="arrow-left" src="<?php echo get_theme_file_uri() .'/assets/images/arrow-left.png';?>" alt="Flèche précédent"></a>
+                    <?php } ?>
+                </div>
+
+                <!-- Bloc pour la photo suivante -->
+                <div class="arrow-block">
+                    <div class="container-miniature container-miniature-next">
+                        <?php
+                            if (!empty($next_post)) {
+                                $thumbnail_ID_next = get_post_thumbnail_id($next_post->ID);
+                                if ($thumbnail_ID_next) {
+                                    echo wp_get_attachment_image($thumbnail_ID_next, 'thumbnail', false, ['class' => 'container-miniature-next__img-arrows']);
+                                }
+                            }
+                        ?>
+                    </div>
+                    <?php if (!empty($next_post)) { ?>
+                        <a href="<?php echo get_permalink($next_post->ID) ?>"><img class="arrow-right" src="<?php echo get_theme_file_uri() .'/assets/images/arrow-right.png';?>" alt="Flèche suivant"></a>
+                    <?php } ?>
+                </div>
+                
+            <?php } ?>
         </div>
-  </section>
+</section>
 
 
 <!-- section recommandations -->
 
-<div class="page-photo_recommandations">
+<div class="container-photo">
 
-    <h3>VOUS AIMEREZ AUSSI</h3>
-    <div class="page-photo_recommandations__photo">
+    <p class="container-photo__title"> vous aimerez aussi </p>
+    <div class="container-bloc-photo">
 
-        <?php   
+    <?php
+         $categories = get_the_terms(get_the_ID(), 'categorie');
+            if ($categories && !is_wp_error($categories)) {
+                $category_ids = wp_list_pluck($categories, 'term_id');
 
-            $categorie = strip_tags(get_the_term_list($post->ID, 'categorie'));
-
-            // 1. On définit les arguments pour définir ce que l'on souhaite récupérer 
-            $args = array(
-                'post_type' => 'photo',
-                'posts_per_page' => 2,
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'categorie',
-                        'field' => 'slug',
-                        'terms' => $categorie,
+                $args = array(
+                    'post_type' => 'photos',
+                    'posts_per_page' => 2,
+                    'orderby' => 'rand',
+                    'post__not_in' => array(get_the_ID()),
+                    'tax_query' => array(
+                        array(
+                            'taxonomy' => 'categorie',
+                            'field' => 'term_id',
+                            'terms' => $category_ids,
+                        ),
                     ),
-                ),
-            );
+                );
 
-            // 2. On exécute la WP Query
-            $my_query = new WP_Query( $args );
+                    $photos_query = new WP_Query($args);
 
-            // 3. On lance la boucle !
-            if( $my_query->have_posts() ) : while( $my_query->have_posts() ) : $my_query->the_post();?> 
+                    if ($photos_query->have_posts()) {
+                        while ($photos_query->have_posts()) {
+                            $photos_query->the_post();
+                            $photo_retrieval = get_field('photos');
+                            ?>
+                            
+                            <?php get_template_part('template-parts/bloc-photo'); ?>
 
-                <?php get_template_part('templates_parts/page-photo_recommandations'); ?>
-        
-            <?php
-            endwhile;
-            endif;
-
-            // 4. On réinitialise à la requête principale (important)
-            wp_reset_postdata();
-
-        ?>
+                            <?php
+                        }
+                        wp_reset_postdata();
+                    }
+                }
+            ?>
 
     </div>
 

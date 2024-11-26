@@ -21,11 +21,14 @@ Text Domain: nathaliemota
 // Apparence générales //
 @import 'sass/general-layout.scss';
 
+// Apparence de la front page //
+@import 'sass/front-page.scss';
+
 // Apparence du hero de la page d'accueil //
 @import 'sass/index-hero.scss';
 
-// Apparence de la partie catalogue de la page d'accueil //
-@import 'sass/index-catalogue.scss';
+// Apparence d'un bloc photo //
+@import 'sass/bloc-photo.scss';
 
 // Apparence de la page d'infos d'une photo //
 @import 'sass/page-photo.scss';

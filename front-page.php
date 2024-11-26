@@ -5,7 +5,7 @@
     </div>
 
     <section id="section-catalogue" class="container-photo align-left">
-    <div class="catalogue-container" data-page="1">
+    <div class="container-bloc-photo" data-page="1">
     <?php
 
     $pagin = get_query_var('paged') ? get_query_var('paged') : 1;
@@ -23,7 +23,7 @@
                     $catalogue_photos->the_post();
 
                     // structure du catalogue
-                    get_template_part('template-parts/index-catalogue');
+                    get_template_part('template-parts/bloc-photo');
                 }
                 wp_reset_postdata();
             }

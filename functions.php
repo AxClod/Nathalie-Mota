@@ -25,6 +25,7 @@ add_theme_support( "title-tag" );
     add_action( 'init', 'register_my_menus' );
 
 
+// Change la class du lien "bouton" dans le menu
 function ajouter_classe_bouton_contact($classes, $item, $args) {
     
     if ($item->ID == 22) { 
@@ -34,4 +35,4 @@ function ajouter_classe_bouton_contact($classes, $item, $args) {
 }
 add_filter('nav_menu_css_class', 'ajouter_classe_bouton_contact', 10, 3);
 
-?>
+

@@ -2,12 +2,13 @@
     display: flex;
     flex-direction: column;
     width: 80vw;
+    margin: 0 auto;
 
     &__title {
         margin: -20px 0px 30px;
         text-transform: uppercase;
     }
-
+    
     &__all-btn {
         width: 270px;
         height: 50px;
@@ -24,14 +25,14 @@
     }
 }
 
-.catalogue-container {
+.container-bloc-photo {
     display: flex;
     align-items: center;
     text-transform: uppercase;
     justify-content: space-between;
     flex-wrap: wrap;
 
-    .catalogue-image {
+    .bloc-photo {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -43,7 +44,7 @@
         object-fit: cover;
         position: relative;
 
-        .catalogue-image_overlay {
+        .bloc-photo_overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -54,8 +55,8 @@
 
             .eye-icon,
             .fullscreen-icon,
-            .catalogue-image_overlay_title,
-            .catalogue-image_overlay_category {
+            .bloc-photo_overlay_title,
+            .bloc-photo_overlay_category {
                 position: absolute;
                 color: #FFFFFF;
             }
@@ -76,29 +77,29 @@
                 cursor: pointer;
             }
 
-            .catalogue-image_overlay_title,
-            .catalogue-image_overlay_category {
+            .bloc-photo_overlay_title,
+            .bloc-photo_overlay_category {
                 bottom: 10px;
             }
 
-            .catalogue-image_overlay_title {
+            .bloc-photo_overlay_title {
                 left: 10px;
                 font-family: 'poppins', sans-serif;
             }
 
-            .catalogue-image_overlay_category {
+            .bloc-photo_overlay_category {
                 right: 10px;
             }
         }
 
-        &:hover .catalogue-image_overlay {
+        &:hover .bloc-photo_overlay {
             display: block;
         }
     }
 
-    .catalogue-image > img {
+    .bloc-photo > img {
         object-fit: cover;
-        height: 81vh;
+        height: 100%;
         width: 100%;
     }
 }
