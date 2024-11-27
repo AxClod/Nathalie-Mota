@@ -23,22 +23,37 @@
 }
 
 .filtre {
-  margin: 2em 8.5em 0 -3.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 0 2rem;
 }
 .filtre #form-filters {
   display: flex;
+  width: 100%;
   justify-content: space-between;
 }
+.filtre #form-filters .filtres-gauche {
+  display: flex;
+}
+.filtre #form-filters .filtres-droite {
+  margin-left: auto;
+}
+.filtre #form-filters label[for=formats] {
+  display: inline-block;
+  margin-left: 2rem;
+}
 .filtre #form-filters select {
-  height: -moz-fit-content;
-  height: fit-content;
   background-color: transparent;
   border: solid 1px #B8BBC2;
   border-radius: 8px;
   text-transform: uppercase;
   font-family: "Poppins-Medium";
-  padding: 0 1em;
-  font-size: 1.2em;
+  padding: 1em;
+  font-size: 12px;
+  width: 260px;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 .filtre #form-filters select:focus {
   border: 1.3px solid #215AFF;
@@ -50,9 +65,29 @@
 .filtre #form-filters select option:checked {
   background: #E00000 !important;
 }
-.filtre #form-filters #ajax_call_categories {
-  margin: 0 2em 0 -3em;
-}
-.filtre #form-filters #ajax_call_formats {
-  margin-left: -26em;
+@media screen and (max-width: 768px) {
+  .filtre {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 0;
+    width: 80%;
+  }
+  .filtre #form-filters {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .filtre #form-filters .filtres-gauche,
+  .filtre #form-filters .filtres-droite {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .filtre #form-filters label {
+    margin-left: 0;
+  }
+  .filtre #form-filters select {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 }/*# sourceMappingURL=front-page.css.map */

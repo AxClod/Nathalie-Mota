@@ -310,22 +310,37 @@ body {
 }
 
 .filtre {
-  margin: 2em 8.5em 0 -3.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 0 2rem;
 }
 .filtre #form-filters {
   display: flex;
+  width: 100%;
   justify-content: space-between;
 }
+.filtre #form-filters .filtres-gauche {
+  display: flex;
+}
+.filtre #form-filters .filtres-droite {
+  margin-left: auto;
+}
+.filtre #form-filters label[for=formats] {
+  display: inline-block;
+  margin-left: 2rem;
+}
 .filtre #form-filters select {
+  background-color: transparent;
+  border: solid 1px #B8BBC2;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-family: "Poppins-Medium";
+  padding: 1em;
+  font-size: 12px;
+  width: 260px;
   height: -moz-fit-content;
   height: fit-content;
-  background-color: transparent;
-  border: solid 1px #C9CCD1;
-  border-radius: 10px;
-  text-transform: uppercase;
-  font-family: "space mono";
-  padding: 0 1em;
-  font-size: 1.2em;
 }
 .filtre #form-filters select:focus {
   border: 1.3px solid #215AFF;
@@ -337,11 +352,31 @@ body {
 .filtre #form-filters select option:checked {
   background: #E00000 !important;
 }
-.filtre #form-filters #ajax_call_categories {
-  margin: 0 2em 0 -3em;
-}
-.filtre #form-filters #ajax_call_formats {
-  margin-left: -26em;
+@media screen and (max-width: 768px) {
+  .filtre {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 0;
+    width: 80%;
+  }
+  .filtre #form-filters {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .filtre #form-filters .filtres-gauche,
+  .filtre #form-filters .filtres-droite {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .filtre #form-filters label {
+    margin-left: 0;
+  }
+  .filtre #form-filters select {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 }
 
 .container-hero {
@@ -376,6 +411,18 @@ body {
   text-align: center; /* Pour centrer le texte multiligne */
 }
 
+@media screen and (max-width: 767px) {
+  .container-hero {
+    height: 40vh;
+  }
+  .container-hero_image {
+    height: 40vh;
+  }
+  .container-hero_title {
+    font-size: 30px;
+    -webkit-text-stroke: 0.86px white;
+  }
+}
 .container-photo {
   display: flex;
   flex-direction: column;
@@ -383,8 +430,8 @@ body {
   margin: 0 auto;
 }
 .container-photo__title {
-  margin: -20px 0px 30px;
   text-transform: uppercase;
+  padding: 30px 0px 10px;
 }
 .container-photo__all-btn {
   width: 270px;
@@ -471,6 +518,44 @@ body {
   width: 100%;
 }
 
+@media screen and (max-width: 767px) {
+  .container-photo {
+    width: 100vw;
+    align-items: center;
+  }
+  .container-photo__title {
+    margin: -20px 0px 30px;
+    text-transform: uppercase;
+    font-size: 25px;
+  }
+  .container-bloc-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    text-transform: uppercase;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .container-bloc-photo .bloc-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(90vw - 37.5px);
+    height: 86vw;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    margin-bottom: 44px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    position: relative;
+  }
+  .container-bloc-photo img {
+    -o-object-fit: cover;
+       object-fit: cover;
+    height: 65vh;
+    width: 100%;
+  }
+}
 .page-photo {
   display: flex;
   flex-direction: column;
@@ -639,4 +724,63 @@ body {
   height: auto;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.lightbox img {
+  max-width: 80vw;
+  max-height: 80vh;
+}
+.lightbox__nav-button {
+  position: absolute;
+  width: 8vw;
+  height: 3vh;
+  cursor: pointer;
+}
+.lightbox__prev-button {
+  left: 2%;
+}
+.lightbox__next-button {
+  right: 2%;
+}
+
+.hidden {
+  display: none;
+}
+
+.lightbox-reference,
+.lightbox-category {
+  text-transform: uppercase;
+  position: absolute;
+  color: white;
+  font-size: 16px;
+}
+
+.lightbox-reference {
+  left: 350px;
+  font-family: "poppins", sans-serif;
+}
+
+.lightbox-category {
+  right: 350px;
+}
+
+#close-button {
+  position: absolute;
+  top: 45px;
+  right: 50px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
 }/*# sourceMappingURL=style.css.map */

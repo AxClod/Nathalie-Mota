@@ -29,4 +29,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center; /* Pour centrer le texte multiligne */
+}
+
+@media screen and (max-width: 767px) {
+  .container-hero {
+    height: 40vh;
+  }
+  .container-hero_image {
+    height: 40vh;
+  }
+  .container-hero_title {
+    font-size: 30px;
+    -webkit-text-stroke: 0.86px white;
+  }
 }/*# sourceMappingURL=Index-hero.css.map */

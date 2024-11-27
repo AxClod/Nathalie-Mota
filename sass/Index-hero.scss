@@ -33,3 +33,18 @@
         text-align: center; /* Pour centrer le texte multiligne */
     }
 }
+
+@media screen and (max-width: 767px) {
+    .container-hero {
+        height: 40vh;
+
+        &_image {
+            height: 40vh;
+        }
+    
+        &_title {
+            font-size: 30px;
+            -webkit-text-stroke: 0.86px white;
+        }
+    }
+}

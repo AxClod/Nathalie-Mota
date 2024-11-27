@@ -10,6 +10,8 @@
             ?>
         <p>TOUT DROITS RÉSERVÉS</p>
     </div>
+    <!-- lightbox -->
+    <?php get_template_part('template-parts/lightbox'); ?>
 </footer>
 <?php wp_footer(); ?>
 </body>

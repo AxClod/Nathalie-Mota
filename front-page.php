@@ -30,43 +30,47 @@
             <!-- Filtres -->
             <form id="form-filters">
                     <!-- Filtre catégorie -->
-                    <label for="categories"></label>
-                    <select name="categories" id="ajax_call_categories" size=1>
-                        <option value="">Catégories</option>
-                        <?php
-                        if (!empty($categories) && !is_wp_error($categories)) {
-                            foreach ($categories as $category) {
-                                $category_value = $category->slug;
-                                $category_name = $category->name;
-                                echo '<option value="' . $category_value . '">' . $category_name . '</option>';
+                    <div class="filtres-gauche">
+                        <label for="categories"></label>
+                        <select name="categories" id="ajax_call_categories" size=1>
+                            <option value="">Catégories</option>
+                            <?php
+                            if (!empty($categories) && !is_wp_error($categories)) {
+                                foreach ($categories as $category) {
+                                    $category_value = $category->slug;
+                                    $category_name = $category->name;
+                                    echo '<option value="' . $category_value . '">' . $category_name . '</option>';
+                                }
                             }
-                        }
-                    ?>
-                    </select>
+                        ?>
+                        </select>
 
-                <!-- Filtre formats -->
-                    <label for="formats"></label>
-                    <select name="formats" id="ajax_call_formats" size=1>
-                        <option value="">Formats</option>
-                        <?php
-                        if (!empty($formats) && !is_wp_error($formats)) {
-                            foreach ($formats as $format) {
-                                $format_value = $format->slug;
-                                $format_name = $format->name;
-                                echo '<option value="' . $format_value . '">' . $format_name . '</option>';
+                    <!-- Filtre formats -->
+                        <label for="formats"></label>
+                        <select name="formats" id="ajax_call_formats" size=1>
+                            <option value="">Formats</option>
+                            <?php
+                            if (!empty($formats) && !is_wp_error($formats)) {
+                                foreach ($formats as $format) {
+                                    $format_value = $format->slug;
+                                    $format_name = $format->name;
+                                    echo '<option value="' . $format_value . '">' . $format_name . '</option>';
+                                }
                             }
-                        }
-                    ?>
-                    </select>
+                        ?>
+                        </select>
+                    </div>
 
-                <!-- Filtre trier par -->
-                    <label for="dates"></label>
-                    <select name="dates" id="ajax_call_dates" size=1>
-                        <option value="">Trier par</option>
-                        <option value="DESC">Les plus récentes</option>
-                        <option value="ASC">Les plus anciennes</option>  
-                    </select>
-                </form>
+                <div class="filtres-droite">
+                    <!-- Filtre trier par -->
+                        <label for="dates"></label>
+                        <select name="dates" id="ajax_call_dates" size=1>
+                            <option value="">Trier par</option>
+                            <option value="DESC">Les plus récentes</option>
+                            <option value="ASC">Les plus anciennes</option>  
+                        </select>
+                </div>        
+            </form>
         </section>
 
     

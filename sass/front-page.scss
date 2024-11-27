@@ -22,40 +22,84 @@
         }
     }
 
-.filtre{
-    margin: 2em 8.5em 0 -3.5em;
-    #form-filters {
+    .filtre {
         display: flex;
         justify-content: space-between;
-        select{
-            height: fit-content;
-            background-color: transparent;
-            border: solid 1px #B8BBC2;
-            border-radius: 8px;
-            text-transform: uppercase;
-            font-family: "Poppins-Medium";
-            padding: 0 1em;
-            font-size: 1.2em;
-            &:focus {
-                border: 1.3px solid #215AFF;
-                outline: none;
+        align-items: center; 
+        padding: 4rem 0 2rem;
+        
+        #form-filters {
+            display: flex;
+            width: 100%; // Forme étirée pour occuper toute la largeur disponible
+            justify-content: space-between;
+            
+            .filtres-gauche {
+                display: flex;
             }
-            option {
-                &:hover {
-                    background: #FFD6D6 !important;
+            
+            .filtres-droite {
+                margin-left: auto;
+            }
+            
+            label {
+                &[for="formats"] {
+                    display: inline-block;
+                    margin-left: 2rem; // Ajout de la marge gauche
                 }
-                &:checked {
-                    background: #E00000 !important;
+            }
+            
+            select {
+                background-color: transparent;
+                border: solid 1px #B8BBC2;
+                border-radius: 8px;
+                text-transform: uppercase;
+                font-family: "Poppins-Medium";
+                padding: 1em;
+                font-size: 12px;
+                width: 260px;
+                height: fit-content;
+                
+                &:focus {
+                    border: 1.3px solid #215AFF;
+                    outline: none;
                 }
                 
+                option {
+                    &:hover {
+                        background: #FFD6D6 !important;
+                    }
+                    
+                    &:checked {
+                        background: #E00000 !important;
+                    }
+                }
             }
         }
-        #ajax_call_categories {
-            margin: 0 2em 0 -3em;
-        }
-        #ajax_call_formats {
-            margin-left: -26em;
+    
+        // Mobile styles
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 0;
+        width: 80%;
+        
+        #form-filters {
+            flex-direction: column;  // Passage en colonne
+            align-items: flex-start;
+            width: 100%; // Utiliser toute la largeur disponible
+            .filtres-gauche,
+            .filtres-droite {
+                flex-direction: column;  // Passage en colonne
+                align-items: flex-start;
+                width: 100%;
+            }
+            label {
+                margin-left: 0; // Enlève la marge gauche des labels pour un alignement plus propre
+            }
+            select {
+                width: 100%; // Faire en sorte que chaque select prenne toute la largeur disponible
+                margin-bottom: 1rem; // Espace entre les selects
+            }
         }
     }
 }
-

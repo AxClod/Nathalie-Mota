@@ -17,49 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Styliser les selects
-document.addEventListener('DOMContentLoaded', function() {
-  var selects = document.querySelectorAll('select');
-
-  selects.forEach((select) => {
-    select.addEventListener('mousedown', function(e) {
-      e.stopPropagation();
-
-      // Calculer la taille en fonction du nombre d'options
-      var optionCount = select.options.length;
-      var calculatedSize = Math.min(optionCount, 10); // Limiter à une taille maximale de 10
-
-      // Fermer tous les autres selects sauf celui qui a été cliqué
-      selects.forEach((otherSelect) => {
-        if (otherSelect !== select) {
-          otherSelect.size = 1;
-          otherSelect.parentElement.classList.remove('opened');
-        }
-      });
-
-      // Appliquer la taille calculée
-      select.size = calculatedSize;
-      select.parentElement.classList.add('opened');
-    });
-  });
-
-  // Gestionnaire d'événements pour fermer le menu déroulant lorsqu'on clique à l'extérieur
-  document.addEventListener('mousedown', function(e) {
-    selects.forEach((select) => {
-      if (select.parentElement.classList.contains('opened') && !select.parentElement.contains(e.target)) {
-        select.size = 1;
-        select.parentElement.classList.remove('opened');
-      }
-    });
-  });
-});
-
 let page = 2;
 
 function getImages(e) {
   let form = document.getElementById("form-filters");
   let formData = new FormData(form);
-  formData.append('action', 'request_filtered');
+  formData.append('action', 'request_filtered'); // Assurez-vous que cette action est correcte
 
   if (e && e.target === document.querySelector('#load-more')) {
     formData.append('paged', page);
@@ -73,7 +36,8 @@ function getImages(e) {
     e.target.size = 1;
   }
 
-  fetch(pagination-infinie_js.ajax_url, {
+  // Appel AJAX
+  fetch(pagination_infinie_js.ajax_url, {  // Utilisation de pagination_infinie_js
     method: 'POST',
     body: formData,
   })
