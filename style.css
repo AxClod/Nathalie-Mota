@@ -288,6 +288,60 @@ body {
 #load-more_container {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+#load-more_container #load-more {
+  border-radius: 2px;
+  background: #D8D8D8;
+  box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+  display: flex;
+  width: 22em;
+  height: 3.5em;
+  padding: 8px 15px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  font-family: "Space Mono";
+}
+#load-more_container #load-more:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+.filtre {
+  margin: 2em 8.5em 0 -3.5em;
+}
+.filtre #form-filters {
+  display: flex;
+  justify-content: space-between;
+}
+.filtre #form-filters select {
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: transparent;
+  border: solid 1px #C9CCD1;
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-family: "space mono";
+  padding: 0 1em;
+  font-size: 1.2em;
+}
+.filtre #form-filters select:focus {
+  border: 1.3px solid #215AFF;
+  outline: none;
+}
+.filtre #form-filters select option:hover {
+  background: #FFD6D6 !important;
+}
+.filtre #form-filters select option:checked {
+  background: #E00000 !important;
+}
+.filtre #form-filters #ajax_call_categories {
+  margin: 0 2em 0 -3em;
+}
+.filtre #form-filters #ajax_call_formats {
+  margin-left: -26em;
 }
 
 .container-hero {
@@ -425,7 +479,7 @@ body {
 }
 .page-photo_section-bloc {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-end;
   margin-top: 2em;
   margin-bottom: 2em;
@@ -507,7 +561,7 @@ body {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid black;
-  padding-bottom: 1em;
+  padding-top: 0.5em;
   height: 118px;
 }
 .page-photo .page-photo_contact__bouton {

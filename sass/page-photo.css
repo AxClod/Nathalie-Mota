@@ -7,7 +7,7 @@
 }
 .page-photo_section-bloc {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-end;
   margin-top: 2em;
   margin-bottom: 2em;
@@ -89,7 +89,7 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid black;
-  padding-bottom: 1em;
+  padding-top: 0.5em;
   height: 118px;
 }
 .page-photo .page-photo_contact__bouton {
