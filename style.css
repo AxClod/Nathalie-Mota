@@ -520,11 +520,10 @@ body {
 
 @media screen and (max-width: 767px) {
   .container-photo {
-    width: 100vw;
+    width: 100%;
     align-items: center;
   }
   .container-photo__title {
-    margin: -20px 0px 30px;
     text-transform: uppercase;
     font-size: 25px;
   }
@@ -565,9 +564,9 @@ body {
 .page-photo_section-bloc {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
   margin-top: 2em;
   margin-bottom: 2em;
+  gap: 2em; /* Espace entre les colonnes sur grand écran */
 }
 .page-photo_section-bloc_info {
   display: inline-flex;
@@ -641,6 +640,22 @@ body {
 .page-photo .img-single img.fullscreen-icon {
   width: 35px;
   height: 35px;
+}
+@media screen and (max-width: 768px) {
+  .page-photo_section-bloc {
+    flex-direction: column-reverse; /* Empiler les éléments en colonne */
+    align-items: flex-start;
+    gap: 1em; /* Moins d'espace entre les éléments sur mobile */
+    margin-bottom: 0;
+  }
+  .page-photo_section-bloc_info {
+    width: 100%; /* Les infos prennent toute la largeur sur mobile */
+    padding-right: 0; /* Enlever le padding droit */
+    margin-right: 0; /* Enlever la marge droite */
+  }
+  .page-photo .img-single {
+    width: 100%; /* La photo prend toute la largeur sur mobile */
+  }
 }
 .page-photo .page-photo_contact {
   display: flex;
@@ -724,6 +739,25 @@ body {
   height: auto;
   -o-object-fit: cover;
      object-fit: cover;
+}
+@media screen and (max-width: 768px) {
+  .page-photo .page-photo_contact {
+    flex-direction: column; /* Empiler les sections verticalement */
+    align-items: center; /* Centrer les éléments */
+    padding-bottom: 1em;
+  }
+  .page-photo .page-photo_contact__bouton {
+    flex-direction: column; /* Texte et bouton en colonne */
+    gap: 1rem; /* Espacement réduit entre le texte et le bouton */
+    text-align: center; /* Centrer le texte */
+  }
+  .page-photo .page-photo_contact__bouton #btn-contact {
+    width: 100%; /* Le bouton occupe toute la largeur disponible */
+    max-width: 300px; /* Taille maximale pour garder une bonne lisibilité */
+  }
+  .page-photo .page-photo_contact__navigation-arrows {
+    display: none; /* Cacher les flèches de navigation sur mobile */
+  }
 }
 
 .lightbox {

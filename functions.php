@@ -1,29 +1,52 @@
 <?php
 
 function theme_script() {
-    wp_enqueue_style( 'style', get_stylesheet_uri() );
+    // Charger le style principal
+    wp_enqueue_style('style', get_stylesheet_uri());
 
     // Charger jQuery
     wp_enqueue_script('jquery');
 
     // Charger le fichier script.js
-    wp_enqueue_script('script-personnalise', get_template_directory_uri() . '/js/script.js', array('jquery'), null, true);
+    wp_enqueue_script(
+        'script-personnalise',
+        get_template_directory_uri() . '/js/script.js',
+        ['jquery'],
+        null,
+        true
+    );
 
-    // Charge un script nommé 'lightbox' avec dépendance à jQuery
-    wp_enqueue_script('lightbox', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), '1.0', true);  
-    
-    // Crée une variable JavaScript 'adminAjax' pour stocker l'URL de l'API Ajax
-    wp_localize_script('lightbox', 'adminAjax', array('ajax_url' => admin_url('admin-ajax.php')));  
+    // Charger le fichier lightbox.js
+    wp_enqueue_script(
+        'lightbox',
+        get_template_directory_uri() . '/js/lightbox.js',
+        ['jquery'],
+        '1.0',
+        true
+    );
 
-    // Déclarer le fichier pour les requêtes ajax
-    wp_enqueue_script('pagination-infinie', get_template_directory_uri() . '/js/pagination-infinie.js', array('jquery'), '1.0.0', true);
+    // Ajouter la variable adminAjax pour lightbox.js
+    wp_localize_script('lightbox', 'adminAjax', [
+        'ajax_url' => admin_url('admin-ajax.php'),
+    ]);
 
-    // Passer les données de PHP vers Javascript de manière sécurisée
-    wp_localize_script('pagination-infinie', 'pagination_infinie_js', array(  
-        'ajax_url' => admin_url('admin-ajax.php') 
-    ));
+    //Déclarer le fichier pour les requêtes ajax
+    wp_enqueue_script(
+        'motaphoto', 
+        get_template_directory_uri() . '/js/pagination-infinie.js', array('jquery'), 
+        '1.0.0', 
+        true
+     );
+     // Passer les données de PHP vers Javascript de manière sécurisée
+     wp_localize_script(
+         'motaphoto', 
+         'motaphoto_js', 
+         array('ajax_url' => admin_url('admin-ajax.php'))
+     );
 }
+
 add_action('wp_enqueue_scripts', 'theme_script');
+
     
 // Ajouter la prise en charge des images mises en avant
 add_theme_support( 'post-thumbnails' );
@@ -51,70 +74,72 @@ add_filter('nav_menu_css_class', 'ajouter_classe_bouton_contact', 10, 3);
 
 
 // Pagination infinie
-// Filtres
-function pagination_infinie_request_filtered() { // Attention à la correspondance du nom de la fonction
-    $categories = isset($_POST['categories']) ? sanitize_text_field($_POST['categories']) : '';
-    $formats = isset($_POST['formats']) ? sanitize_text_field($_POST['formats']) : '';
-    $dates = isset($_POST['dates']) ? sanitize_text_field($_POST['dates']) : 'ASC';
-    $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
+function motaphoto_request_filtered() {
+    
+    $categories = $_POST['categories'];
+    $formats = $_POST['formats'];
+    $dates = $_POST['dates'];
+    $paged = $_POST['paged'];
 
-    $tax_query = [];
-    if ($categories) {
-        $tax_query[] = [
+    if($categories != "") {
+        $argCategories = array(
             'taxonomy' => 'categorie',
             'field' => 'slug',
             'terms' => $categories,
-        ];
+        );
+    } else {
+        $argCategories = null;
     }
-    if ($formats) {
-        $tax_query[] = [
-            'taxonomy' => 'format',
+
+    if( $formats != "") {
+        $argFormats = array(
+            'taxonomy' => 'formats',
             'field' => 'slug',
             'terms' => $formats,
-        ];
+        );
+    } else {
+        $argFormats = null;
     }
 
-    $query_args = [
-        'post_type' => 'photos',
+    $query = new WP_Query([
+        'post_type' => 'photo',
         'posts_per_page' => 8,
         'paged' => $paged,
-        'orderby' => 'meta_value',
         'meta_key' => 'annee',
-        'order' => $dates,
-    ];
+        'tax_query' => array(
+            $argCategories ?? "",
+            $argFormats ?? "",
+        ),
+        'meta_key' => 'annee',
+            'order' => $dates,
+            'orderby' => 'meta_value'
+    ]);
 
-    if (!empty($tax_query)) {
-        $query_args['tax_query'] = $tax_query;
-    }
 
-    $query = new WP_Query($query_args);
-
-    if ($query->have_posts()) {
+    if( $query -> have_posts()) {
         ob_start();
         while ($query->have_posts()) {
-            $query->the_post();
-            get_template_part('templates-parts/bloc-photo'); // Assurez-vous que ce fichier existe
-        }
-        $my_html = ob_get_clean();
-
+            $query->the_post(); 
+            $response = get_template_part('templates_parts/bloc-photo');
+        } 
+        $my_html = ob_get_contents();
+        ob_end_clean();
         $response = [
             'my_html' => $my_html,
-            'found_posts' => $query->found_posts,
+            'found_posts' => $query->found_posts
         ];
+        
     } else {
-        $response = [
-            'my_html' => '<div>Aucune photo ne correspond à ces critères.</div>',
-            'found_posts' => 0,
-        ];
+        $response = false;
     }
 
-    wp_send_json($response); // Réponse JSON pour le front-end
-    wp_die(); // Arrêter l'exécution de WordPress après l'ajax
-}
+    wp_send_json($response);
+    wp_die();
 
-// Enregistrer l'action pour les utilisateurs connectés et non connectés
-add_action('wp_ajax_request_filtered', 'pagination_infinie_request_filtered'); 
-add_action('wp_ajax_nopriv_request_filtered', 'pagination_infinie_request_filtered'); 
+    
+}
+add_action('wp_ajax_request_filtered', 'motaphoto_request_filtered');
+add_action('wp_ajax_nopriv_request_filtered', 'motaphoto_request_filtered');
 
 
 // Lightbox

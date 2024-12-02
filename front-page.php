@@ -13,7 +13,7 @@
     ));
 
     $formats = get_terms(array(
-        'taxonomy' => 'format',
+        'taxonomy' => 'formats',
         'hide_empty' => true,
     ));
 
@@ -74,7 +74,7 @@
         </section>
 
     
-        <div class="container-bloc-photo" data-page="1">
+        <div class="container-bloc-photo" id="ajax_return" data-page="1">
         <?php
 
         $pagin = get_query_var('paged') ? get_query_var('paged') : 1;

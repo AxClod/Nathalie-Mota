@@ -37,10 +37,16 @@
 <!-- section précédent/suivant -->
 
 <section class="page-photo_contact">
-    <div class="page-photo_contact__bouton">
-        <p class="texte">Cette photo vous intéresse ?</p>
-        <input id="btn-contact" class="bouton-contact" type="button" value="Contact">
-    </div>
+<div class="page-photo_contact__bouton">
+    <p class="texte">Cette photo vous intéresse ?</p>
+    <input 
+        id="btn-contact" 
+        class="bouton-contact" 
+        type="button" 
+        value="Contact" 
+        data-reference="<?php echo get_field('reference'); ?>" 
+    />
+</div>
     
     <?php
             //Flèches précédent et suivant
