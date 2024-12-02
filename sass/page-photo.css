@@ -11,6 +11,7 @@
   margin-top: 2em;
   margin-bottom: 2em;
   gap: 2em; /* Espace entre les colonnes sur grand écran */
+  height: calc(100vh - 278px); /* taille de l'écran - section contact */
 }
 .page-photo_section-bloc_info {
   display: inline-flex;
@@ -118,6 +119,8 @@
   font-style: normal;
   font-weight: 300;
   line-height: normal;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 .page-photo .page-photo_contact__bouton #btn-contact {
   border-radius: 2px;

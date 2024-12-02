@@ -37,6 +37,7 @@ function theme_script() {
         '1.0.0', 
         true
      );
+     
      // Passer les données de PHP vers Javascript de manière sécurisée
      wp_localize_script(
          'motaphoto', 
@@ -75,68 +76,56 @@ add_filter('nav_menu_css_class', 'ajouter_classe_bouton_contact', 10, 3);
 
 // Pagination infinie
 function motaphoto_request_filtered() {
+    $categories = isset($_POST['categorie']) ? sanitize_text_field($_POST['categorie']) : '';
+    $formats = isset($_POST['formats']) ? sanitize_text_field($_POST['formats']) : '';
+    $dates = isset($_POST['dates']) ? sanitize_text_field($_POST['dates']) : 'DESC';
+    $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
     
-    $categories = $_POST['categories'];
-    $formats = $_POST['formats'];
-    $dates = $_POST['dates'];
-    $paged = $_POST['paged'];
-
-    if($categories != "") {
-        $argCategories = array(
+    // Construction de la tax_query
+    $tax_query = [];
+    if ($categories) {
+        $tax_query[] = [
             'taxonomy' => 'categorie',
-            'field' => 'slug',
-            'terms' => $categories,
-        );
-    } else {
-        $argCategories = null;
+            'field'    => 'slug',
+            'terms'    => $categories,
+        ];
     }
 
-    if( $formats != "") {
-        $argFormats = array(
+    if ($formats) {
+        $tax_query[] = [
             'taxonomy' => 'formats',
-            'field' => 'slug',
-            'terms' => $formats,
-        );
-    } else {
-        $argFormats = null;
+            'field'    => 'slug',
+            'terms'    => $formats,
+        ];
     }
 
+    // WP_Query pour récupérer les photos
     $query = new WP_Query([
-        'post_type' => 'photo',
+        'post_type'      => 'photos',
         'posts_per_page' => 8,
-        'paged' => $paged,
-        'meta_key' => 'annee',
-        'tax_query' => array(
-            $argCategories ?? "",
-            $argFormats ?? "",
-        ),
-        'meta_key' => 'annee',
-            'order' => $dates,
-            'orderby' => 'meta_value'
+        'paged'          => $paged,
+        'tax_query'      => $tax_query,
+        'order'          => $dates,
+        'orderby'        => 'date',
     ]);
 
-
-    if( $query -> have_posts()) {
+    if ($query->have_posts()) {
         ob_start();
         while ($query->have_posts()) {
-            $query->the_post(); 
-            $response = get_template_part('templates_parts/bloc-photo');
-        } 
-        $my_html = ob_get_contents();
-        ob_end_clean();
+            $query->the_post();
+            get_template_part('template_parts/bloc-photo');
+        }
+        $my_html = ob_get_clean();
         $response = [
-            'my_html' => $my_html,
-            'found_posts' => $query->found_posts
+            'my_html'     => $my_html,
+            'found_posts' => $query->found_posts,
         ];
-        
     } else {
         $response = false;
     }
 
     wp_send_json($response);
     wp_die();
-
-    
 }
 add_action('wp_ajax_request_filtered', 'motaphoto_request_filtered');
 add_action('wp_ajax_nopriv_request_filtered', 'motaphoto_request_filtered');

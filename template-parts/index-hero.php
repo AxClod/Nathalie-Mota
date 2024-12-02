@@ -20,7 +20,7 @@ if ($query->have_posts()) :
         $image_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image
         ?>
         <div class="container-hero_image" style="background-image: url('<?php echo esc_url($image_url); ?>');">
-            <h1 class="container-hero_title"><?php the_title(); ?></h1>
+        <h1 class="container-hero_title">Photographe event</h1>
         </div>
         <?php
     endwhile;

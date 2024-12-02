@@ -18,7 +18,7 @@
     ));
 
     $args = array(
-        'post_type' => 'photo',
+        'post_type' => 'photos',
         'orderby' => 'date',
         'order' => 'ASC',
         'posts_per_page' => 8,
@@ -74,35 +74,69 @@
         </section>
 
     
-        <div class="container-bloc-photo" id="ajax_return" data-page="1">
+    <div class="container-bloc-photo" id="ajax_return">
         <?php
-
+        // Récupération de la page courante pour la pagination
         $pagin = get_query_var('paged') ? get_query_var('paged') : 1;
-                $args_photos = array(
-                    'post_type' => 'photos',
-                    'posts_per_page' => 8,
-                    'orderby' => 'date',
-                    'order' => 'ASC', 
-                );
 
-                $catalogue_photos = new WP_Query($args_photos);
+        // Récupération des paramètres des filtres
+        $categories = isset($_POST['categories']) ? $_POST['categories'] : '';
+        $formats = isset($_POST['formats']) ? $_POST['formats'] : '';
+        $dates = isset($_POST['dates']) ? $_POST['dates'] : 'DESC'; // Valeur par défaut
+        $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1; // Valeur de la page
 
-                if ($catalogue_photos->have_posts()) {
-                    while ($catalogue_photos->have_posts()) {
-                        $catalogue_photos->the_post();
+        // Arguments de la requête
+        $args_photos = array(
+            'post_type' => 'photos', // Assurez-vous que le type de post est correct
+            'posts_per_page' => 8,
+            'paged' => $paged,
+            'orderby' => 'date', // Ou 'meta_value' si vous triez par date via un champ personnalisé
+            'order' => $dates,
+            'tax_query' => array(
+                'relation' => 'AND', // Utilisé si vous avez plusieurs filtres
+            ),
+        );
 
-                        // structure du catalogue
-                        get_template_part('template-parts/bloc-photo');
-                    }
-                    wp_reset_postdata();
-                }
-                ?>
-        </div>
+        // Ajout de la taxonomie pour le filtrage des catégories
+        if (!empty($categories)) {
+            $args_photos['tax_query'][] = array(
+                'taxonomy' => 'categorie', // Assurez-vous que c'est la bonne taxonomie
+                'field'    => 'slug',
+                'terms'    => $categories,
+            );
+        }
 
-        <div id="load-more_container">
-            <button id="load-more" class="load-more_bouton">Charger plus</button>
-        </div>
-    </section>    
+        // Ajout de la taxonomie pour le filtrage des formats
+        if (!empty($formats)) {
+            $args_photos['tax_query'][] = array(
+                'taxonomy' => 'formats', // Assurez-vous que c'est la bonne taxonomie
+                'field'    => 'slug',
+                'terms'    => $formats,
+            );
+        }
+
+        // Exécution de la requête
+        $catalogue_photos = new WP_Query($args_photos);
+
+        // Vérification des résultats
+        if ($catalogue_photos->have_posts()) {
+            while ($catalogue_photos->have_posts()) {
+                $catalogue_photos->the_post();
+
+                // Structure du catalogue
+                get_template_part('template-parts/bloc-photo');
+            }
+            wp_reset_postdata();
+        } else {
+            // Afficher un message si aucune photo n'est trouvée
+            echo '<div>Aucune photo trouvée.</div>';
+        }
+        ?>
+    </div>
+
+    <div id="load-more_container">
+        <button id="load-more" class="load-more_bouton">Charger plus</button>
+    </div>
 
     </main>
 <?php get_footer(); ?>

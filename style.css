@@ -56,7 +56,6 @@ Text Domain: nathaliemota
     background-color: #FFFFFF;
     justify-content: start;
     width: 100vw;
-    z-index: 1000;
   }
   .navheader .menu-principal li a {
     color: #FFFFFF;
@@ -194,6 +193,70 @@ Text Domain: nathaliemota
 .modal-container__header {
   width: 100%;
   margin-top: 10px;
+}
+
+/* Styles pour le formulaire */
+.formulaire-contact {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.formulaire-contact label {
+  font-family: "poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.formulaire-contact input {
+  height: 40px;
+  width: 263px;
+  border-radius: 8px;
+  border: solid #B8BBC2 1px;
+  margin-top: 0px;
+}
+.formulaire-contact input[type=submit] {
+  height: 50px;
+  width: 270px;
+  border-radius: 2px;
+  background-color: #D8D8D8;
+  border: solid #D8D8D8 2px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: -10px;
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+.formulaire-contact input[type=submit]:hover {
+  background-color: #cacaca;
+}
+.formulaire-contact textarea {
+  height: 142px;
+  width: 263px;
+  border-radius: 8px;
+  border: solid #B8BBC2 1px;
+}
+
+/* message validation et erreur formulaire */
+.wpcf7 form .wpcf7-response-output {
+  margin: -1em 0.5em 1em;
+  border: 2px solid red;
+  font-size: 12px;
+  font-family: "poppins";
+  margin-top: -25px;
+  text-align: center;
+}
+
+.wpcf7-not-valid-tip {
+  color: #dc3232;
+  font-size: 1em;
+  font-family: "poppins";
+  font-weight: normal;
+  display: block;
+  margin-bottom: -20px;
 }
 
 .formulaire-contact {
@@ -396,6 +459,7 @@ body {
   background-repeat: no-repeat;
 }
 .container-hero_title {
+  width: 100%;
   font-family: "SpaceMono-BoldItalic";
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: #FFF;
@@ -567,6 +631,7 @@ body {
   margin-top: 2em;
   margin-bottom: 2em;
   gap: 2em; /* Espace entre les colonnes sur grand écran */
+  height: calc(100vh - 127px); /* taille de l'écran - section contact */
 }
 .page-photo_section-bloc_info {
   display: inline-flex;
@@ -674,6 +739,8 @@ body {
   font-style: normal;
   font-weight: 300;
   line-height: normal;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 .page-photo .page-photo_contact__bouton #btn-contact {
   border-radius: 2px;

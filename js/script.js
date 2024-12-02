@@ -14,22 +14,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Sélectionne la modale et les boutons de contact
     const modal = document.getElementById('modale-contact');
     const btns = document.getElementsByClassName('bouton-contact');
-    const referencePhotoField = document.querySelector('input[name="RÉF. PHOTO"]'); // Champ du formulaire CF7
+    const referencePhotoField = document.querySelector('.reference-field'); // Utilisation de la classe
 
-    // Ajout d'un écouteur de clic à chaque bouton 
+    // Ajout d'un écouteur de clic à chaque bouton 'contact-link'
     for(let i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function(event){
             // Empêche le comportement par défaut du clic (naviguer vers le lien)
             event.preventDefault();
 
             // Si le champ de référence est trouvé, on met à jour sa valeur
-            const referenceValue = btn.dataset.reference;
-            if (referenceValue) {
-                // Si une référence est disponible, elle est pré-remplie
-                referencePhotoField.value = referenceValue;
+            if (referencePhotoField) {
+                const referenceValue = this.dataset.reference;
+                if (referenceValue) {
+                    referencePhotoField.value = referenceValue;
+                }
             } else {
-                // Si aucune référence n'est disponible, le champ reste vide
-                referencePhotoField.value = "";
+                console.error("L'élément avec l'ID 'reference' n'a pas été trouvé.");
             }
 
             // Affiche la modale de contact
