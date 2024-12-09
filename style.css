@@ -56,6 +56,7 @@ Text Domain: nathaliemota
     background-color: #FFFFFF;
     justify-content: start;
     width: 100vw;
+    z-index: 1000;
   }
   .navheader .menu-principal li a {
     color: #FFFFFF;
@@ -172,7 +173,7 @@ Text Domain: nathaliemota
   height: 100%;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 1500;
 }
 .modal-container.open {
   display: flex;
@@ -628,10 +629,11 @@ body {
 .page-photo_section-bloc {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   margin-top: 2em;
   margin-bottom: 2em;
   gap: 2em; /* Espace entre les colonnes sur grand écran */
-  height: calc(100vh - 127px); /* taille de l'écran - section contact */
+  height: calc(100vh - 278px); /* taille de l'écran - section contact */
 }
 .page-photo_section-bloc_info {
   display: inline-flex;
@@ -640,10 +642,11 @@ body {
   gap: 7px;
   border-bottom: 1px solid black;
   margin: 0;
-  padding-right: 17em;
+  padding-right: 1em;
   padding-bottom: 2em;
   margin-right: 2em;
   list-style: none;
+  padding-left: 0;
 }
 .page-photo_section-bloc_info h1 {
   font-family: "SpaceMono-Regular";
@@ -670,24 +673,21 @@ body {
 }
 .page-photo .img-single {
   position: relative;
+  width: 50%;
   display: flex;
-  justify-content: center;
-  align-items: center; /* Centrer verticalement l'image */
+  justify-content: flex-end;
 }
 .page-photo .img-single__overlay {
   position: relative;
   display: flex;
-  width: 100%; /* S'adapte à tout l'espace disponible */
-  height: 100%; /* Prend la hauteur disponible */
 }
 .page-photo .img-single img {
-  width: auto; /* Respecte le ratio d'aspect */
-  max-width: 100%; /* Ne dépasse pas la largeur du conteneur */
-  height: auto; /* Respecte le ratio d'aspect */
-  max-height: 90vh; /* Ne dépasse pas la hauteur de l'écran visible */
+  width: 100%;
+  height: auto;
   -o-object-fit: contain;
-     object-fit: contain; /* Garde les proportions */
+     object-fit: contain;
   display: block;
+  max-height: 70vh;
 }
 .page-photo .img-single .overlay-single {
   position: absolute;
@@ -710,6 +710,7 @@ body {
   .page-photo_section-bloc {
     flex-direction: column-reverse; /* Empiler les éléments en colonne */
     align-items: flex-start;
+    height: auto;
     gap: 1em; /* Moins d'espace entre les éléments sur mobile */
     margin-bottom: 0;
   }

@@ -76,12 +76,11 @@ add_filter('nav_menu_css_class', 'ajouter_classe_bouton_contact', 10, 3);
 
 // Pagination infinie
 function motaphoto_request_filtered() {
-    $categories = isset($_POST['categorie']) ? sanitize_text_field($_POST['categorie']) : '';
+    $categories = isset($_POST['categories']) ? sanitize_text_field($_POST['categories']) : '';
     $formats = isset($_POST['formats']) ? sanitize_text_field($_POST['formats']) : '';
     $dates = isset($_POST['dates']) ? sanitize_text_field($_POST['dates']) : 'DESC';
     $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-    
-    // Construction de la tax_query
+
     $tax_query = [];
     if ($categories) {
         $tax_query[] = [
@@ -99,7 +98,6 @@ function motaphoto_request_filtered() {
         ];
     }
 
-    // WP_Query pour récupérer les photos
     $query = new WP_Query([
         'post_type'      => 'photos',
         'posts_per_page' => 8,
@@ -113,18 +111,21 @@ function motaphoto_request_filtered() {
         ob_start();
         while ($query->have_posts()) {
             $query->the_post();
-            get_template_part('template_parts/bloc-photo');
+            get_template_part('template-parts/bloc-photo');
         }
-        $my_html = ob_get_clean();
-        $response = [
-            'my_html'     => $my_html,
-            'found_posts' => $query->found_posts,
-        ];
+        $output = ob_get_clean();
+        wp_send_json([
+            'success'       => true,
+            'my_html'       => $output,
+            'max_num_pages' => $query->max_num_pages,
+        ]);
     } else {
-        $response = false;
+        wp_send_json([
+            'success' => false,
+            'message' => 'Aucune photo trouvée.',
+        ]);
     }
 
-    wp_send_json($response);
     wp_die();
 }
 add_action('wp_ajax_request_filtered', 'motaphoto_request_filtered');

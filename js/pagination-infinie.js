@@ -50,13 +50,28 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+
+
 let page = 2;
 
+document.addEventListener('DOMContentLoaded', function () {
+  // Ajout des écouteurs pour les filtres
+  const form = document.getElementById('form-filters');
+  if (form) {
+    form.addEventListener('change', getImages); // Pour les changements de filtres
+  }
+
+  const loadMoreBtn = document.getElementById('load-more');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', getImages); // Pour le bouton de pagination
+  }
+});
+
 function getImages(e) {
-  e.preventDefault(); // Empêche tout comportement par défaut
+  e.preventDefault();
+
   const form = document.getElementById('form-filters');
   const formData = new FormData(form);
-
   formData.append('action', 'request_filtered');
 
   if (e.target.id === 'load-more') {
@@ -66,36 +81,28 @@ function getImages(e) {
     page = 2; // Réinitialise la pagination si un filtre change
   }
 
-  console.log('FormData envoyé :');
-  for (let [key, value] of formData.entries()) {
-    console.log(key, value);
-  }
-
   fetch(motaphoto_js.ajax_url, {
     method: 'POST',
     body: formData,
   })
     .then((response) => {
       if (!response.ok) throw new Error('Erreur réseau');
-      
       return response.json();
     })
     .then((data) => {
-      if (data.found_posts < page * 8 - 8) {
-        document.querySelector('#load-more').style.display = 'none';
-      } else {
-        document.querySelector('#load-more').style.display = 'block';
-      }
-
+      const ajaxReturn = document.querySelector('#ajax_return');
       if (e.target.id !== 'load-more') {
-        document.querySelector('#ajax_return').innerHTML = '';
+        ajaxReturn.innerHTML = ''; // Réinitialise le contenu si un filtre change
       }
 
-      if (data.my_html) {
-        document.querySelector('#ajax_return').insertAdjacentHTML('beforeend', data.my_html);
+      if (data.success) {
+        ajaxReturn.insertAdjacentHTML('beforeend', data.my_html);
+        document.querySelector('#load-more').style.display =
+          page > data.max_num_pages ? 'none' : 'block';
       } else {
-        document.querySelector('#ajax_return').innerHTML = '<div>Aucune photo trouvée.</div>';
+        ajaxReturn.innerHTML = '<div>Aucune photo trouvée.</div>';
+        document.querySelector('#load-more').style.display = 'none';
       }
     })
-    .catch((error) => console.error('Problème avec fetch :', error));
+    .catch((error) => console.error('Erreur avec fetch :', error));
 }
