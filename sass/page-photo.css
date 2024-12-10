@@ -93,6 +93,9 @@
     gap: 1em; /* Moins d'espace entre les éléments sur mobile */
     margin-bottom: 0;
   }
+  .page-photo_section-bloc h1 {
+    font-size: 46px;
+  }
   .page-photo_section-bloc_info {
     width: 100%; /* Les infos prennent toute la largeur sur mobile */
     padding-right: 0; /* Enlever le padding droit */
@@ -100,6 +103,9 @@
   }
   .page-photo .img-single {
     width: 100%; /* La photo prend toute la largeur sur mobile */
+  }
+  .page-photo .img-single img {
+    max-height: 100%;
   }
 }
 .page-photo .page-photo_contact {
@@ -186,6 +192,14 @@
   height: auto;
   -o-object-fit: cover;
      object-fit: cover;
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .page-photo .page-photo_contact__bouton {
+    gap: 10px;
+  }
+  .page-photo .page-photo_contact__bouton #btn-contact {
+    width: 125px; /* Le bouton occupe toute la largeur disponible */
+  }
 }
 @media screen and (max-width: 768px) {
   .page-photo .page-photo_contact {

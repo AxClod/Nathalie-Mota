@@ -11,7 +11,6 @@
             width: 22em;
             height: 3.5em;
             padding: 8px 15px;
-            margin-bottom: 3em;
             justify-content: center;
             align-items: center;
             border: none;
@@ -78,7 +77,16 @@
             }
         }
     
-        // Mobile styles
+    // Tablettes styles //
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        #form-filters {
+            select {
+                width : 17vh;
+            }
+        }
+    }
+
+    // Mobile styles //
     @media screen and (max-width: 768px) {
         flex-direction: column;
         align-items: flex-start;

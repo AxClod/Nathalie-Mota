@@ -163,9 +163,30 @@
 
         &__content {
             width: 286px;
-            height: 583px;
-            top: 60%;
+            height: 75vh;
+            top: 55%;
             overflow-y: auto;
+        }
+    }
+
+    .formulaire-contact {
+        margin-top: 0;
+    
+        p {
+            margin-bottom: 0;
+        }
+
+        label {
+            font-size: 12px;
+        }
+
+        input {
+            width: 190px;
+        }
+
+        input[type="submit"] {
+            width: 190px;
+            margin-top: 10px;
         }
     }
 }

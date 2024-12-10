@@ -60,3 +60,70 @@
     height: 25px;
     cursor: pointer;
 }
+
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .lightbox {
+    
+        &__nav-button {
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+        
+        &__prev-button {
+            left: 4%;
+        }
+        
+        &__next-button {
+            right: 4%;
+        }
+
+        &__prev-chevron {
+            border-right: 10px solid #FFFFFF;
+        }
+
+        &__next-chevron {
+            border-left: 10px solid #FFFFFF;
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .lightbox {
+
+        img {
+            margin-top: 100px;
+        }
+
+        &__nav-button {
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+        
+        &__prev-button {
+            left: 4%;
+        }
+        
+        &__next-button {
+            right: 4%;
+        }
+
+        &__prev-chevron {
+            border-right: 10px solid #FFFFFF;
+        }
+
+        &__next-chevron {
+            border-left: 10px solid #FFFFFF;
+        }
+    }
+
+    #close-button {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+    }
+}

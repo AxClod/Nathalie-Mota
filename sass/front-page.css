@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 3em;
 }
 #load-more_container #load-more {
   border-radius: 2px;
@@ -11,6 +12,7 @@
   width: 22em;
   height: 3.5em;
   padding: 8px 15px;
+  margin-bottom: 3em;
   justify-content: center;
   align-items: center;
   border: none;
@@ -64,6 +66,11 @@
 }
 .filtre #form-filters select option:checked {
   background: #E00000 !important;
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .filtre #form-filters select {
+    width: 17vh;
+  }
 }
 @media screen and (max-width: 768px) {
   .filtre {

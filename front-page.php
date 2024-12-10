@@ -1,9 +1,13 @@
 <?php get_header(); // Inclut le header du thème // ?>
     <main>
+
+<!-- section hero -->
+
     <div>
         <?php get_template_part('/template-parts/index-hero'); ?>
     </div>
 
+<!--  section catalogue --> 
     <section id="section-catalogue" class="container-photo align-left">
 
     <?php
@@ -25,9 +29,8 @@
         'paged' => 1,
     );
     ?>
-
+        <!--  Les filtres --> 
         <section class="filtre">
-            <!-- Filtres -->
             <form id="form-filters">
                     <!-- Filtre catégorie -->
                     <div class="filtres-gauche">
@@ -73,7 +76,7 @@
             </form>
         </section>
 
-    
+    <!--  La grille de photos --> 
     <div class="container-bloc-photo" id="ajax_return">
         <?php
         // Récupération de la page courante pour la pagination
@@ -87,20 +90,20 @@
 
         // Arguments de la requête
         $args_photos = array(
-            'post_type' => 'photos', // Assurez-vous que le type de post est correct
+            'post_type' => 'photos', 
             'posts_per_page' => 8,
             'paged' => $paged,
-            'orderby' => 'date', // Ou 'meta_value' si vous triez par date via un champ personnalisé
+            'orderby' => 'date', 
             'order' => $dates,
             'tax_query' => array(
-                'relation' => 'AND', // Utilisé si vous avez plusieurs filtres
+                'relation' => 'AND', 
             ),
         );
 
         // Ajout de la taxonomie pour le filtrage des catégories
         if (!empty($categories)) {
             $args_photos['tax_query'][] = array(
-                'taxonomy' => 'categorie', // Assurez-vous que c'est la bonne taxonomie
+                'taxonomy' => 'categorie',
                 'field'    => 'slug',
                 'terms'    => $categories,
             );
@@ -109,7 +112,7 @@
         // Ajout de la taxonomie pour le filtrage des formats
         if (!empty($formats)) {
             $args_photos['tax_query'][] = array(
-                'taxonomy' => 'formats', // Assurez-vous que c'est la bonne taxonomie
+                'taxonomy' => 'formats', 
                 'field'    => 'slug',
                 'terms'    => $formats,
             );
@@ -134,6 +137,7 @@
         ?>
     </div>
 
+    <!--  Bouton charger plus --> 
     <div id="load-more_container">
         <button id="load-more" class="load-more_bouton">Charger plus</button>
     </div>

@@ -144,4 +144,19 @@
     top: 60%;
     overflow-y: auto;
   }
+  .formulaire-contact {
+    margin-top: 0;
+  }
+  .formulaire-contact p {
+    margin: 0;
+  }
+  .formulaire-contact label {
+    font-size: 12px;
+  }
+  .formulaire-contact label {
+    width: 190px;
+  }
+  .formulaire-contact textarea {
+    width: 190px;
+  }
 }/*# sourceMappingURL=modale-contact.css.map */

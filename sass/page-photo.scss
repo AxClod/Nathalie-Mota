@@ -224,6 +224,18 @@
             }
         }
 
+        // Media Query pour tablette
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            .page-photo_contact__bouton {
+                gap: 10px;
+
+                #btn-contact {
+                    width: 125px; /* Le bouton occupe toute la largeur disponible */
+                }
+            }
+        }
+
+
         // Media Query pour mobile
         @media screen and (max-width: 768px) {
             .page-photo_contact {
