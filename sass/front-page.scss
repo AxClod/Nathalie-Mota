@@ -23,64 +23,130 @@
         }
     }
 
-    .filtre {
+    // SCSS complet pour le style des filtres
+.filtre {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 4rem 0 2rem;
+    
+    #form-filters {
         display: flex;
+        width: 100%;
         justify-content: space-between;
-        align-items: center; 
-        padding: 4rem 0 2rem;
-        
-        #form-filters {
+
+        .filtres-gauche {
             display: flex;
-            width: 100%; // Forme étirée pour occuper toute la largeur disponible
-            justify-content: space-between;
-            
-            .filtres-gauche {
-                display: flex;
-            }
-            
-            .filtres-droite {
-                margin-left: auto;
-            }
-            
-            label {
-                &[for="formats"] {
-                    display: inline-block;
-                    margin-left: 2rem; // Ajout de la marge gauche
-                }
-            }
-            
-            select {
+        }
+
+        .filtres-droite {
+            margin-left: auto;
+        }
+    }
+
+    .custom-select-wrapper {
+        position: relative;
+        user-select: none;
+        width: 260px;
+
+        // Format spécifique
+        &#ajax_call_formats {
+            display: inline-block;
+            margin-left: 2rem;
+        }
+
+        .custom-select {
+            position: relative;
+
+            &__trigger {
                 background-color: transparent;
                 border: solid 1px #B8BBC2;
-                border-radius: 8px;
-                text-transform: uppercase;
-                font-family: "Poppins-Medium";
+                border-radius: 8px 8px 0 0;
                 padding: 1em;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-family: "Poppins-Medium";
                 font-size: 12px;
-                width: 260px;
-                height: fit-content;
-                
-                &:focus {
-                    border: 1.3px solid #215AFF;
-                    outline: none;
+                text-transform: uppercase;
+                cursor: pointer;
+
+                &:hover {
+                    background: #FFD6D6;
                 }
-                
-                option {
-                    &:hover {
-                        background: #FFD6D6 !important;
+
+                .arrow {
+                    width: 0;
+                    height: 0;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid #000;
+                    transition: transform 0.3s ease;
+                }
+            }
+
+            // Bordure active pour les titres des filtres
+            &__trigger.active {
+                border: 1.3px solid #215AFF;
+                outline: none;
+            }
+
+            &.open .custom-select__trigger {
+                .arrow {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .custom-options {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                border: 1px solid #B8BBC2;
+                border-radius: 0 0 8px 8px;
+                background-color: white;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease-in-out;
+                z-index: 10;
+
+                .custom-option {
+                    padding: 1em;
+                    cursor: pointer;
+                    font-family: "Poppins-Medium";
+                    font-size: 12px;
+                    display: block;
+
+                    &:first-child {
+                        margin-top: 2rem;
                     }
-                    
-                    &:checked {
-                        background: #E00000 !important;
+
+                    &:hover {
+                        background: #FFD6D6;
+                    }
+
+                    // Style pour l'option sélectionnée
+                    &.selected {
+                        background: #E00000;
+                        color: white;
                     }
                 }
             }
+
+            &.open .custom-options {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
         }
-    
+    }
+
     // Tablettes styles //
     @media screen and (min-width: 768px) and (max-width: 1024px) {
         #form-filters {
-            select {
+            .custom-select-wrapper {
                 width : 17vh;
             }
         }
@@ -106,9 +172,12 @@
             label {
                 margin-left: 0; // Enlève la marge gauche des labels pour un alignement plus propre
             }
-            select {
+            .custom-select-wrapper {
                 width: 100%; // Faire en sorte que chaque select prenne toute la largeur disponible
                 margin-bottom: 1rem; // Espace entre les selects
+                &#ajax_call_formats {
+                    margin-left: 0;
+                }
             }
         }
     }

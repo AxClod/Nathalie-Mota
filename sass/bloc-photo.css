@@ -29,6 +29,8 @@
   text-transform: uppercase;
   justify-content: space-between;
   flex-wrap: wrap;
+  width: 80vw;
+  margin: 0 auto;
 }
 .container-bloc-photo .bloc-photo {
   display: flex;

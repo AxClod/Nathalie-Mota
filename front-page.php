@@ -7,10 +7,10 @@
         <?php get_template_part('/template-parts/index-hero'); ?>
     </div>
 
-<!--  section catalogue --> 
-    <section id="section-catalogue" class="container-photo align-left">
-
+<!-- Section catalogue -->
+<section id="section-catalogue" class="container-photo align-left">
     <?php
+    // Récupération des taxonomies
     $categories = get_terms(array(
         'taxonomy' => 'categorie',
         'hide_empty' => true,
@@ -20,61 +20,69 @@
         'taxonomy' => 'formats',
         'hide_empty' => true,
     ));
-
-    $args = array(
-        'post_type' => 'photos',
-        'orderby' => 'date',
-        'order' => 'ASC',
-        'posts_per_page' => 8,
-        'paged' => 1,
-    );
     ?>
-        <!--  Les filtres --> 
-        <section class="filtre">
-            <form id="form-filters">
-                    <!-- Filtre catégorie -->
-                    <div class="filtres-gauche">
-                        <label for="categories"></label>
-                        <select name="categories" id="ajax_call_categories" size=1>
-                            <option value="">Catégories</option>
+
+    <!-- Les filtres -->
+    <section class="filtre">
+        <form id="form-filters">
+            <!-- Filtre catégories -->
+            <div class="filtres-gauche">
+                <div class="custom-select-wrapper" id="ajax_call_categories">
+                    <div class="custom-select">
+                        <div class="custom-select__trigger">
+                            <span>Catégories</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="custom-options">
                             <?php
                             if (!empty($categories) && !is_wp_error($categories)) {
                                 foreach ($categories as $category) {
-                                    $category_value = $category->slug;
-                                    $category_name = $category->name;
-                                    echo '<option value="' . $category_value . '">' . $category_name . '</option>';
+                                    echo '<span class="custom-option" data-value="' . esc_attr($category->slug) . '">' . esc_html($category->name) . '</span>';
                                 }
                             }
-                        ?>
-                        </select>
+                            ?>
+                        </div>
+                    </div>
+                </div>
 
-                    <!-- Filtre formats -->
-                        <label for="formats"></label>
-                        <select name="formats" id="ajax_call_formats" size=1>
-                            <option value="">Formats</option>
+                <!-- Filtre formats -->
+                <div class="custom-select-wrapper" id="ajax_call_formats">
+                    <div class="custom-select">
+                        <div class="custom-select__trigger">
+                            <span>Formats</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="custom-options">
                             <?php
                             if (!empty($formats) && !is_wp_error($formats)) {
                                 foreach ($formats as $format) {
-                                    $format_value = $format->slug;
-                                    $format_name = $format->name;
-                                    echo '<option value="' . $format_value . '">' . $format_name . '</option>';
+                                    echo '<span class="custom-option" data-value="' . esc_attr($format->slug) . '">' . esc_html($format->name) . '</span>';
                                 }
                             }
-                        ?>
-                        </select>
+                            ?>
+                        </div>
                     </div>
+                </div>
+            </div>
 
-                <div class="filtres-droite">
-                    <!-- Filtre trier par -->
-                        <label for="dates"></label>
-                        <select name="dates" id="ajax_call_dates" size=1>
-                            <option value="">Trier par</option>
-                            <option value="DESC">Les plus récentes</option>
-                            <option value="ASC">Les plus anciennes</option>  
-                        </select>
-                </div>        
-            </form>
-        </section>
+            <!-- Trier par -->
+            <div class="filtres-droite">
+                <div class="custom-select-wrapper" id="ajax_call_dates">
+                    <div class="custom-select">
+                        <div class="custom-select__trigger">
+                            <span>Trier par</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="custom-options">
+                            <span class="custom-option" data-value="DESC">Les plus récentes</span>
+                            <span class="custom-option" data-value="ASC">Les plus anciennes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</section>
 
     <!--  La grille de photos --> 
     <div class="container-bloc-photo" id="ajax_return">

@@ -323,7 +323,7 @@ Text Domain: nathaliemota
   .formulaire-contact input {
     width: 190px;
   }
-  .formulaire-contact input[type="submit"] {
+  .formulaire-contact input[type=submit] {
     width: 190px;
     margin-top: 10px;
   }
@@ -410,34 +410,90 @@ body {
 .filtre #form-filters .filtres-droite {
   margin-left: auto;
 }
-.filtre #form-filters label[for=formats] {
+.filtre .custom-select-wrapper {
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  width: 260px;
+}
+.filtre .custom-select-wrapper#ajax_call_formats {
   display: inline-block;
   margin-left: 2rem;
 }
-.filtre #form-filters select {
+.filtre .custom-select-wrapper .custom-select {
+  position: relative;
+}
+.filtre .custom-select-wrapper .custom-select__trigger {
   background-color: transparent;
   border: solid 1px #B8BBC2;
-  border-radius: 8px;
-  text-transform: uppercase;
-  font-family: "Poppins-Medium";
+  border-radius: 8px 8px 0 0;
   padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Poppins-Medium";
   font-size: 12px;
-  width: 260px;
-  height: -moz-fit-content;
-  height: fit-content;
+  text-transform: uppercase;
+  cursor: pointer;
 }
-.filtre #form-filters select:focus {
+.filtre .custom-select-wrapper .custom-select__trigger:hover {
+  background: #FFD6D6;
+}
+.filtre .custom-select-wrapper .custom-select__trigger .arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000;
+  transition: transform 0.3s ease;
+}
+.filtre .custom-select-wrapper .custom-select__trigger.active {
   border: 1.3px solid #215AFF;
   outline: none;
 }
-.filtre #form-filters select option:hover {
-  background: #FFD6D6 !important;
+.filtre .custom-select-wrapper .custom-select.open .custom-select__trigger .arrow {
+  transform: rotate(180deg);
 }
-.filtre #form-filters select option:checked {
-  background: #E00000 !important;
+.filtre .custom-select-wrapper .custom-select .custom-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #B8BBC2;
+  border-radius: 0 0 8px 8px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease-in-out;
+  z-index: 10;
+}
+.filtre .custom-select-wrapper .custom-select .custom-options .custom-option {
+  padding: 1em;
+  cursor: pointer;
+  font-family: "Poppins-Medium";
+  font-size: 12px;
+  display: block;
+}
+.filtre .custom-select-wrapper .custom-select .custom-options .custom-option:first-child {
+  margin-top: 2rem;
+}
+.filtre .custom-select-wrapper .custom-select .custom-options .custom-option:hover {
+  background: #FFD6D6;
+}
+.filtre .custom-select-wrapper .custom-select .custom-options .custom-option.selected {
+  background: #E00000;
+  color: white;
+}
+.filtre .custom-select-wrapper .custom-select.open .custom-options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .filtre #form-filters select {
+  .filtre #form-filters .custom-select-wrapper {
     width: 17vh;
   }
 }
@@ -462,9 +518,12 @@ body {
   .filtre #form-filters label {
     margin-left: 0;
   }
-  .filtre #form-filters select {
+  .filtre #form-filters .custom-select-wrapper {
     width: 100%;
     margin-bottom: 1rem;
+  }
+  .filtre #form-filters .custom-select-wrapper#ajax_call_formats {
+    margin-left: 0;
   }
 }
 
@@ -543,6 +602,8 @@ body {
   text-transform: uppercase;
   justify-content: space-between;
   flex-wrap: wrap;
+  width: 80vw;
+  margin: 0 auto;
 }
 .container-bloc-photo .bloc-photo {
   display: flex;

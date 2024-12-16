@@ -1,108 +1,130 @@
-// Appels Ajax filtres
-let sectionFiltres = document.querySelector('.filtre');
 document.addEventListener('DOMContentLoaded', function () {
+  let page = 2;
+
+  // Écoute les événements des filtres
+  const sectionFiltres = document.querySelector('.filtre');
   if (sectionFiltres != null) {
     document.querySelector('#ajax_call_categories').addEventListener('change', getImages);
     document.querySelector('#ajax_call_formats').addEventListener('change', getImages);
     document.querySelector('#ajax_call_dates').addEventListener('change', getImages);
-    document.querySelector('#load-more').addEventListener('click', getImages);
-  }
-});
-
-// Styliser les selects
-var selectCat = document.querySelector('#ajax_call_categories');
-var selectFormat = document.querySelector('#ajax_call_formats');
-var selectDate = document.querySelector('#ajax_call_dates');
-
-document.addEventListener('DOMContentLoaded', function () {
-  var selects = document.querySelectorAll('select');
-
-  selects.forEach((select) => {
-    select.addEventListener('mousedown', function (e) {
-      e.stopPropagation();
-
-      // Calculer la taille en fonction du nombre d'options
-      var optionCount = select.options.length;
-      var calculatedSize = Math.min(optionCount, 10); // limiter à une taille maximale de 10
-
-      // Fermer tous les autres selects sauf celui qui a été cliqué
-      selects.forEach((otherSelect) => {
-        if (otherSelect !== select) {
-          otherSelect.size = 1;
-          otherSelect.parentElement.classList.remove('opened');
-        }
+    const loadMoreBtn = document.querySelector('#load-more');
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        getImages(true); // Charge les prochaines pages
       });
+    }
+  }
 
-      // Appliquer la taille calculée
-      select.size = calculatedSize;
-      select.parentElement.classList.add('opened');
+  // Stylisation des selects personnalisés
+  const selectWrappers = document.querySelectorAll('.custom-select');
+
+  selectWrappers.forEach((select) => {
+    const trigger = select.querySelector('.custom-select__trigger');
+    const options = select.querySelectorAll('.custom-option');
+    const span = trigger.querySelector('span');
+
+    // Ouvrir ou fermer le menu des options
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeAllSelects();
+      select.classList.toggle('open');
+    });
+
+    // Gérer la sélection d'une option
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        span.textContent = option.textContent; // Met à jour le texte
+        trigger.setAttribute('data-value', option.dataset.value); // Met à jour la valeur
+
+        // Marquer l'option comme sélectionnée
+        options.forEach((opt) => opt.classList.remove("selected"));
+        option.classList.add("selected");
+
+        // Ajoute la valeur sélectionnée dans le formulaire
+        const form = document.getElementById('form-filters');
+        const inputName = select.closest('.custom-select-wrapper').id.replace('ajax_call_', '');
+        form.querySelectorAll(`input[name="${inputName}"]`).forEach((el) => el.remove());
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = inputName;
+        input.value = option.dataset.value;
+        form.appendChild(input);
+
+        // Actualise les photos
+        page = 2; // Réinitialise la pagination
+        getImages(false); // Charge les filtres mis à jour
+      });
     });
   });
 
-  // Gestionnaire d'événements pour fermer le menu déroulant lorsqu'on clique à l'extérieur
-  document.addEventListener('mousedown', function (e) {
-    selects.forEach((select) => {
-      if (select.parentElement.classList.contains('opened') && !select.parentElement.contains(e.target)) {
-        select.size = 1;
-        select.parentElement.classList.remove('opened');
-      }
+  // Fermer tous les menus ouverts quand on clique à l'extérieur
+  document.addEventListener('click', () => {
+    closeAllSelects();
+  });
+
+  function closeAllSelects() {
+    document.querySelectorAll('.custom-select').forEach((el) => el.classList.remove('open'));
+  }
+
+  // Ajouter un style "active" pour les filtres ouverts
+  const triggers = document.querySelectorAll('.custom-select__trigger');
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', function () {
+      triggers.forEach((el) => el.classList.remove('active')); // Retire "active" des autres
+      trigger.classList.add('active'); // Ajoute "active" au trigger actuel
     });
   });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.custom-select')) {
+      triggers.forEach((trigger) => trigger.classList.remove('active'));
+    }
+  });
+
+  // Fonction principale pour récupérer les images
+  function getImages(isLoadMore = false) {
+    const form = document.getElementById('form-filters');
+    const formData = new FormData(form);
+    formData.append('action', 'request_filtered');
+    if (isLoadMore) {
+      formData.append('paged', page);
+      page++;
+    } else {
+      page = 2; // Réinitialise la pagination si un filtre change
+    }
+
+    fetch(motaphoto_js.ajax_url, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Erreur réseau');
+        return response.json();
+      })
+      .then((data) => {
+        const ajaxReturn = document.querySelector('#ajax_return');
+        if (!isLoadMore) {
+          ajaxReturn.innerHTML = ''; // Réinitialise le contenu si un filtre change
+        }
+
+        if (data.success) {
+          ajaxReturn.insertAdjacentHTML('beforeend', data.my_html);
+          const loadMoreBtn = document.querySelector('#load-more');
+          if (loadMoreBtn) {
+            loadMoreBtn.style.display = page > data.max_num_pages ? 'none' : 'block';
+          }
+        } else {
+          ajaxReturn.innerHTML = '<div>Aucune photo trouvée.</div>';
+          const loadMoreBtn = document.querySelector('#load-more');
+          if (loadMoreBtn) {
+            loadMoreBtn.style.display = 'none';
+          }
+        }
+      })
+      .catch((error) => console.error('Erreur avec fetch :', error));
+  }
 });
 
 
-
-let page = 2;
-
-document.addEventListener('DOMContentLoaded', function () {
-  // Ajout des écouteurs pour les filtres
-  const form = document.getElementById('form-filters');
-  if (form) {
-    form.addEventListener('change', getImages); // Pour les changements de filtres
-  }
-
-  const loadMoreBtn = document.getElementById('load-more');
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener('click', getImages); // Pour le bouton de pagination
-  }
-});
-
-function getImages(e) {
-  e.preventDefault();
-
-  const form = document.getElementById('form-filters');
-  const formData = new FormData(form);
-  formData.append('action', 'request_filtered');
-
-  if (e.target.id === 'load-more') {
-    formData.append('paged', page);
-    page++;
-  } else {
-    page = 2; // Réinitialise la pagination si un filtre change
-  }
-
-  fetch(motaphoto_js.ajax_url, {
-    method: 'POST',
-    body: formData,
-  })
-    .then((response) => {
-      if (!response.ok) throw new Error('Erreur réseau');
-      return response.json();
-    })
-    .then((data) => {
-      const ajaxReturn = document.querySelector('#ajax_return');
-      if (e.target.id !== 'load-more') {
-        ajaxReturn.innerHTML = ''; // Réinitialise le contenu si un filtre change
-      }
-
-      if (data.success) {
-        ajaxReturn.insertAdjacentHTML('beforeend', data.my_html);
-        document.querySelector('#load-more').style.display =
-          page > data.max_num_pages ? 'none' : 'block';
-      } else {
-        ajaxReturn.innerHTML = '<div>Aucune photo trouvée.</div>';
-        document.querySelector('#load-more').style.display = 'none';
-      }
-    })
-    .catch((error) => console.error('Erreur avec fetch :', error));
-}

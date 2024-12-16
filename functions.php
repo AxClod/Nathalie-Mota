@@ -82,41 +82,42 @@ function motaphoto_request_filtered() {
     $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
 
     $tax_query = [];
+
     if ($categories) {
         $tax_query[] = [
             'taxonomy' => 'categorie',
-            'field'    => 'slug',
-            'terms'    => $categories,
+            'field' => 'slug',
+            'terms' => $categories,
         ];
     }
 
     if ($formats) {
         $tax_query[] = [
             'taxonomy' => 'formats',
-            'field'    => 'slug',
-            'terms'    => $formats,
+            'field' => 'slug',
+            'terms' => $formats,
         ];
     }
 
     $query = new WP_Query([
-        'post_type'      => 'photos',
+        'post_type' => 'photos',
         'posts_per_page' => 8,
-        'paged'          => $paged,
-        'tax_query'      => $tax_query,
-        'order'          => $dates,
-        'orderby'        => 'date',
+        'paged' => $paged,
+        'order' => $dates,
+        'orderby' => 'date',
+        'tax_query' => $tax_query,
     ]);
 
     if ($query->have_posts()) {
         ob_start();
         while ($query->have_posts()) {
             $query->the_post();
-            get_template_part('template-parts/bloc-photo');
+            get_template_part('template-parts/bloc-photo'); // Ton template d'affichage de photo
         }
         $output = ob_get_clean();
         wp_send_json([
-            'success'       => true,
-            'my_html'       => $output,
+            'success' => true,
+            'my_html' => $output,
             'max_num_pages' => $query->max_num_pages,
         ]);
     } else {
@@ -130,6 +131,7 @@ function motaphoto_request_filtered() {
 }
 add_action('wp_ajax_request_filtered', 'motaphoto_request_filtered');
 add_action('wp_ajax_nopriv_request_filtered', 'motaphoto_request_filtered');
+
 
 
 // Lightbox
@@ -162,5 +164,25 @@ add_action('wp_ajax_nopriv_request_filtered', 'motaphoto_request_filtered');
 
     add_action('wp_ajax_load_all_photos_for_lightbox', 'load_all_photos_for_lightbox');         // Si l'utilisateur est connecté
     add_action('wp_ajax_nopriv_load_all_photos_for_lightbox', 'load_all_photos_for_lightbox');  // Si l'utilisateur n'est pas connecté
+
+
+// Limiter le poids des images uploadées à moins de 1 Mo
+function limiter_taille_image($file) {
+    // Taille maximale autorisée en octets (1 Mo)
+    $taille_max = 1 * 1024 * 1024;
+
+    // Vérifiez si le fichier est une image
+    $types_autorises = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (in_array($file['type'], $types_autorises)) {
+        // Vérifiez la taille
+        if ($file['size'] > $taille_max) {
+            // Redimensionner ou rejeter l'image
+            $file['error'] = 'L\'image est trop lourde. La taille maximale autorisée est de 1 Mo. Veuillez compresser votre fichier.';
+        }
+    }
+
+    return $file;
+    }
+    add_filter('wp_handle_upload_prefilter', 'limiter_taille_image');
 
 ?>

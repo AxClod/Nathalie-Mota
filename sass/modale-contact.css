@@ -140,21 +140,25 @@
 @media screen and (max-width: 767px) {
   .modal-container__content {
     width: 286px;
-    height: 583px;
-    top: 60%;
+    height: 75vh;
+    top: 55%;
     overflow-y: auto;
   }
   .formulaire-contact {
     margin-top: 0;
   }
   .formulaire-contact p {
-    margin: 0;
+    margin-bottom: 0;
   }
   .formulaire-contact label {
     font-size: 12px;
   }
-  .formulaire-contact label {
+  .formulaire-contact input {
     width: 190px;
+  }
+  .formulaire-contact input[type=submit] {
+    width: 190px;
+    margin-top: 10px;
   }
   .formulaire-contact textarea {
     width: 190px;
